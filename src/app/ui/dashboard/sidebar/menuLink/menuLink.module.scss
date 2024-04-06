@@ -1,0 +1,13 @@
+.container {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: .3125rem 0;
+  border-radius: .625rem;
+}
+
+.container:hover,
+.active {
+  background-color: #2e374a;
+}
