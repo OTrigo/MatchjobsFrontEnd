@@ -18,15 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.menu}>
+      <section className={styles.container}>
+        <main className={styles.menu}>
           <Sidebar />
-        </div>
-        <div className={styles.content}>
+        </main>
+        <section className={styles.content}>
           <Navbar />
           {children}
-        </div>
-      </div>
+        </section>
+      </section>
     </>
   );
 }

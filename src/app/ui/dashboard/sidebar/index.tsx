@@ -5,6 +5,7 @@ import {
   MdCollectionsBookmark,
   MdDashboard,
   MdHelpCenter,
+  MdLogout,
   MdOutlineSettings,
   MdPeople,
   MdWork,
@@ -98,6 +99,10 @@ const SideBar = () => {
             </li>
           ))}
         </ul>
+        <button className={styles.logout}>
+          <MdLogout />
+          Logout
+        </button>
       </div>
     </>
   );

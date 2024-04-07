@@ -16,7 +16,7 @@
   object-fit: cover;
 }
 
-.userDetail{
+.userDetail {
   display: flex;
   flex-direction: column;
 }
@@ -30,13 +30,31 @@
   color: var(--textSoft);
 }
 
-.list{
+.list {
   list-style: none;
 }
 
-.menuItem{
+.menuItem {
   color: var(--textSoft);
   font-weight: bold;
   font-size: 12px;
-  margin: .625rem 0;
+  margin: 0.625rem 0;
+}
+
+.logout {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0.3125rem 0;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  width: 100%;
+}
+
+.logout:hover {
+  background-color: #2e374a;
 }
