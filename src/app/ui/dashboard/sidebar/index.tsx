@@ -1,6 +1,5 @@
 import styles from "@/ui/dashboard/sidebar/sidebar.module.scss";
 import {
-  MdAnalytics,
   MdAssignmentTurnedIn,
   MdCollectionsBookmark,
   MdDashboard,
@@ -32,26 +31,6 @@ const menuItems = [
         title: "Vacancys",
         path: "/dashboard/vacancys",
         icon: <MdAssignmentTurnedIn />,
-      },
-    ],
-  },
-  {
-    title: "Analytics",
-    list: [
-      {
-        title: "Revenue",
-        path: "/dashboard/revenue",
-        icon: <MdWork />,
-      },
-      {
-        title: "Reports",
-        path: "/dashboard/reports",
-        icon: <MdAnalytics />,
-      },
-      {
-        title: "Teams",
-        path: "/dashboard/teams",
-        icon: <MdPeople />,
       },
     ],
   },

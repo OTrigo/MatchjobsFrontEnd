@@ -5,14 +5,14 @@ const Transactions = () => {
   return (
     <>
       <section className={styles.container}>
-        <h2 className={styles.title}>Latest transactions</h2>
+        <h2 className={styles.title}>Latest Applications</h2>
         <table className={styles.table}>
           <thead>
             <tr>
-              <td>Name</td>
+              <td>Candidate</td>
               <td>Status</td>
               <td>Date</td>
-              <td>Amount</td>
+              <td>Vacancy</td>
             </tr>
           </thead>
           <tbody>
@@ -26,7 +26,7 @@ const Transactions = () => {
                     height={40}
                     className={styles.userImage}
                   />
-                  John Doe
+                  Juan Claudio
                 </div>
               </td>
               <td>
@@ -35,7 +35,7 @@ const Transactions = () => {
                 </span>
               </td>
               <td>14.02.2024</td>
-              <td>$300</td>
+              <td>Q.A</td>
             </tr>
             <tr>
               <td>
@@ -47,7 +47,7 @@ const Transactions = () => {
                     height={40}
                     className={styles.userImage}
                   />
-                  John Doe
+                  Ruan Gomes
                 </div>
               </td>
               <td>
@@ -56,7 +56,7 @@ const Transactions = () => {
                 </span>
               </td>
               <td>14.02.2024</td>
-              <td>$300</td>
+              <td>Web Developer</td>
             </tr>
             <tr>
               <td>
@@ -68,7 +68,7 @@ const Transactions = () => {
                     height={40}
                     className={styles.userImage}
                   />
-                  John Doe
+                  Manoel Gomes
                 </div>
               </td>
               <td>
@@ -77,7 +77,7 @@ const Transactions = () => {
                 </span>
               </td>
               <td>14.02.2024</td>
-              <td>$300</td>
+              <td>Medicine</td>
             </tr>
             <tr>
               <td>
@@ -89,14 +89,14 @@ const Transactions = () => {
                     height={40}
                     className={styles.userImage}
                   />
-                  John Doe
+                  Matheus Marazzi
                 </div>
               </td>
               <td>
                 <span className={`${styles.status} ${styles.done}`}>Done</span>
               </td>
               <td>14.02.2024</td>
-              <td>$300</td>
+              <td>Production Engineer</td>
             </tr>
             <tr>
               <td>
@@ -108,14 +108,14 @@ const Transactions = () => {
                     height={40}
                     className={styles.userImage}
                   />
-                  John Doe
+                  Gabriel Martins
                 </div>
               </td>
               <td>
                 <span className={`${styles.status} ${styles.done}`}>Done</span>
               </td>
               <td>14.02.2024</td>
-              <td>$300</td>
+              <td>Web Developer</td>
             </tr>
           </tbody>
         </table>
