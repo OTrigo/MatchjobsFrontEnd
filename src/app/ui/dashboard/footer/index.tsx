@@ -1,4 +1,3 @@
-import { MdSupervisedUserCircle } from "react-icons/md";
 import styles from "./footer.module.scss";
 
 const Footer = () => {
