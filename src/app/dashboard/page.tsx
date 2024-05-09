@@ -9,7 +9,7 @@ import Rightbar from "@/ui/dashboard/rightbar";
 export default function DashBoard() {
   return (
     <>
-      <main className={styles.wrapper}>
+      <section className={styles.wrapper}>
         <div className={styles.main}>
           <section className={styles.cards}>
             <Card />
@@ -22,7 +22,7 @@ export default function DashBoard() {
         <div className={styles.side}>
           <Rightbar />
         </div>
-      </main>
+      </section>
     </>
   );
 }

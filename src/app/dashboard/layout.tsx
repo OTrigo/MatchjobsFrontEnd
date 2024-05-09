@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <>
       <section className={styles.container}>
-        <main className={styles.menu}>
+        <section className={styles.menu}>
           <Sidebar />
-        </main>
+        </section>
         <section className={styles.content}>
           <Navbar />
           {children}

@@ -53,7 +53,6 @@ const menuItems = [
 
 const SideBar = () => {
   return (
-    <>
       <div className={styles.container}>
         <section className={styles.user}>
           <Image
@@ -83,7 +82,6 @@ const SideBar = () => {
           Logout
         </button>
       </div>
-    </>
   );
 };
 

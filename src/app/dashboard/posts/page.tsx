@@ -7,7 +7,7 @@ const PostsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a user..." />
+        <Search placeholder="Search for a post..." />
         <Link href="/dashboard/posts/add">
           <button className={styles.addButton}>Add New</button>
         </Link>
