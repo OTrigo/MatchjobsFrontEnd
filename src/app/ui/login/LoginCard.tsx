@@ -17,14 +17,33 @@ const LoginCard = () => {
     setPassword(event.target.value);
   };
 
-  const handleLoginButtonClick = () => {
+  const handleLoginButtonClick = async () => {
     const user = {
       email: email,
       password: password,
     };
 
-    if (user.email === "exemplo@gmail.com" && user.password === "1234") {
-      router.push("/dashboard");
+    try {
+      const response = await fetch(
+        "https://matchjobsbackend-7lo5.onrender.com/auth/signIn/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao enviar requisição: " + response.statusText);
+      } else if (response.status === 201) {
+        const data = await response.json();
+        localStorage.setItem("User", data);
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
   return (
@@ -32,10 +51,7 @@ const LoginCard = () => {
       <section className={styles.loginForm}>
         <div className={styles.loginFormInput}>
           <div className={styles.inputGroup}>
-            <label
-              htmlFor="input-email"
-              className={styles.loginFormInputLabel}
-            >
+            <label htmlFor="input-email" className={styles.loginFormInputLabel}>
               Email
             </label>
             <input
