@@ -16,7 +16,7 @@ export default function DashBoard() {
             <Card />
             <Card />
           </section>
-          <Transactions/>
+          <Transactions />
           <Chart />
         </div>
         <div className={styles.side}>

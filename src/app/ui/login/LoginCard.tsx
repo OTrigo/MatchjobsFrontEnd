@@ -19,11 +19,14 @@ const LoginCard = () => {
 
   const handleLoginButtonClick = async () => {
     const user = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
 
+    console.info(user);
+
     try {
+      console.info("Fazendo request");
       const response = await fetch(
         "https://matchjobsbackend-7lo5.onrender.com/auth/signIn/",
         {
@@ -35,11 +38,14 @@ const LoginCard = () => {
         }
       );
 
+      console.log(response)
+
       if (!response.ok) {
         throw new Error("Erro ao enviar requisição: " + response.statusText);
       } else if (response.status === 201) {
         const data = await response.json();
-        localStorage.setItem("User", data);
+        console.log(JSON.stringify(data))
+        localStorage.setItem("user", JSON.stringify(data));
         router.push("/dashboard");
       }
     } catch (err) {
@@ -59,7 +65,7 @@ const LoginCard = () => {
               className={styles.formInputEmail}
               id="input-email"
               placeholder="joao@example.com"
-              onChange={handleEmailChange}
+              onInput={handleEmailChange}
               required
             />
           </div>
@@ -75,7 +81,7 @@ const LoginCard = () => {
               className={styles.formInputPassword}
               id="input-password"
               placeholder="*****"
-              onChange={handlePasswordChange}
+              onInput={handlePasswordChange}
               required
             />
           </div>
