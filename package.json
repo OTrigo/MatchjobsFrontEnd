@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.43.4",
     "aws4": "^1.12.0",
     "jwt-decode": "^4.0.0",
     "mongodb": "^6.3.0",

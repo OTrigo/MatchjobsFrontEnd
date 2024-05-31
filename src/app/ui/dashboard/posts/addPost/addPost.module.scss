@@ -5,6 +5,7 @@
   border-radius: 10px;
   margin-top: 20px;
   gap: 1rem;
+  width: 100%;
 }
 
 .form input,
@@ -19,7 +20,22 @@
   margin-bottom: 30px;
 }
 
-.form textarea{
+.form {
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+}
+
+.content textarea,
+.content input[type="file"] {
+  width: 50%;
+  height: 100%;
+}
+
+.form textarea {
   resize: none;
 }
 
@@ -29,10 +45,6 @@
   width: fit-content;
   height: auto;
   max-height: 84px;
-}
-
-.form textarea {
-  width: 100%;
 }
 
 .form button {

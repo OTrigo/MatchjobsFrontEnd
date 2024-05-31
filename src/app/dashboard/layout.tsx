@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
 export interface DataUserProps {
+  id: number;
   email: string;
   password: string;
   name: string;
@@ -27,7 +28,6 @@ export default function RootLayout({
   const router = useRouter();
 
   useEffect(() => {
-    console.log("OI");
     if (localStorage.getItem("user") === null) {
       router.replace("/");
     }
@@ -41,6 +41,7 @@ export default function RootLayout({
         const acessToken: DataUserProps = jwtDecode(
           dataUserToken?.access_token
         );
+
         setDataUser(acessToken);
         setIsLoading(false);
       }

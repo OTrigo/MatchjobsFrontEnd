@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/ui/dashboard/card";
-import Transactions from "@/ui/dashboard/transactions";
+import Jobs from "@/ui/dashboard/jobs";
 import Chart from "@/ui/dashboard/chart";
 import styles from "@/ui/dashboard/dashboard.module.scss";
 import Rightbar from "@/ui/dashboard/rightbar";
@@ -16,7 +16,7 @@ export default function DashBoard() {
             <Card />
             <Card />
           </section>
-          <Transactions />
+          <Jobs/>
           <Chart />
         </div>
         <div className={styles.side}>

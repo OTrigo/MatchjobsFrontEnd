@@ -1,7 +1,7 @@
 import Image from "next/image";
-import styles from "./transactions.module.scss";
+import styles from "./jobs.module.scss";
 
-const Transactions = () => {
+const Jobs = () => {
   return (
     <>
       <section className={styles.container}>
@@ -124,4 +124,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Jobs;

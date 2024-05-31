@@ -23,8 +23,6 @@ const LoginCard = () => {
       password,
     };
 
-    console.info(user);
-
     try {
       console.info("Fazendo request");
       const response = await fetch(
