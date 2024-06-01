@@ -5,9 +5,10 @@ import { createClient } from "@supabase/supabase-js";
 import { useState, useContext } from "react";
 import { UserContext } from "../../layout";
 
-const supabaseUrl = "https://lfrigfcolhycpfxcxnjn.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcmlnZmNvbGh5Y3BmeGN4bmpuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxNTYxOTE4NSwiZXhwIjoyMDMxMTk1MTg1fQ.YfTym45E6XfzoI84CcZVEbzdqEOFUcLS8dKo4lW8GrE";
+const supabaseUrl = process.env.SUPABASE_URL ?? "";
+const supabaseKey = process.env.SUPABASE_KEY ?? "";
+
+console.log(supabaseUrl, supabaseKey);
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -47,10 +48,13 @@ const AddPostPage = () => {
     try {
       const { data, error } = await supabase.storage
         .from("matchjobsVideos")
-        .upload(`/web/${videoFile.name}`, videoFile);
+        .upload(`${videoFile.name}`, videoFile);
 
       if (error) {
         console.error("Error uploading file:", error);
+        if (error.message) {
+          alert("Vídeo duplicado, por favor, escolha outro vídeo.");
+        }
         return;
       }
 
@@ -75,12 +79,12 @@ const AddPostPage = () => {
       );
 
       if (response.ok) {
-        console.info("Post successfully submitted!");
+        alert("Post successfully submitted!");
       } else {
-        console.error("Failed to submit post");
+        alert("Failed to submit post");
       }
     } catch (error) {
-      console.error("Error:", error);
+      alert(`Error: ${error}`);
     }
   };
 

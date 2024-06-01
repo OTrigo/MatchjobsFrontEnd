@@ -17,10 +17,13 @@
   color: var(--text);
   border: 2px solid #2e374a;
   border-radius: 5px;
-  margin-bottom: 30px;
+  height: 100%;
+  margin: 1rem 0;
 }
 
 .form {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -29,7 +32,10 @@
   display: flex;
 }
 
-.content textarea,
+.content textarea {
+  width: 100%;
+}
+
 .content input[type="file"] {
   width: 50%;
   height: 100%;
@@ -54,4 +60,5 @@
   color: var(--text);
   border: none;
   cursor: pointer;
+  margin-top: 2rem;
 }

@@ -1,21 +1,35 @@
 "use client";
 
-import styles from "@/ui/dashboard/posts/posts.module.scss";
+import styles from "@/ui/dashboard/jobs/jobs.module.scss";
 import Search from "@/ui/dashboard/search";
 import Link from "next/link";
 import Pagination from "@/ui/dashboard/pagination";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../layout";
+import { useEffect, useState } from "react";
 
-interface PostProps {
+interface JobsProps {
   id: number;
   name: string;
   description: string;
   createdAt: string;
-  videoUrl: string;
+  available: boolean;
+  company: {
+    id: number;
+    name: string;
+    sector: string;
+    employeeAmount: number;
+    rating: number;
+  };
+  companyId?: number;
 }
 
-const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
+const Job = ({
+  id,
+  name,
+  description,
+  createdAt,
+  available,
+  company,
+}: JobsProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasDeleted, setHasDeleted] = useState(false);
 
@@ -24,7 +38,7 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
     const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
     const auth = rawToken?.access_token;
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/job/${id}`,
+      `https://matchjobsbackend-7lo5.onrender.com/jobs/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -53,12 +67,12 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
           <td>{name}</td>
           <td>{description}</td>
           <td>{createdAt}</td>
-          <a href={videoUrl}>
-            <td>Preview</td>
-          </a>
+          <td>{available ? "Yes" : "No"}</td>
+          <td>{company?.name}</td>
+          <td>{company?.sector}</td>
           <td>
             <div className={styles.actions}>
-              <Link href={`/posts/edit/${id}`}>
+              <Link href={`/dashboard/jobs/edit/${id}`}>
                 <button className={`${styles.button} ${styles.view}`}>
                   Edit
                 </button>
@@ -77,41 +91,36 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
   );
 };
 
-const PostsPage = () => {
-  const user = useContext(UserContext);
+const JobsPage = () => {
   const [page, setPage] = useState(1);
-  const [posts, setPosts] = useState<PostProps[]>([]);
-  const [totalPosts, setTotalPosts] = useState(0);
+  const [jobs, setJobs] = useState<JobsProps[]>([]);
+  const [totalJobs, setTotalJobs] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
   const auth = rawToken?.access_token;
 
   useEffect(() => {
-    getPostsPerPage();
-    console.log(posts, totalPosts);
-  }, [page, totalPosts]);
+    getJobsPerPage();
+  }, [page]);
 
-  const getPostsPerPage = async () => {
+  const getJobsPerPage = async () => {
     setIsLoading(true);
     try {
-      const url = `https://matchjobsbackend-7lo5.onrender.com/post${
-        user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`
-      }`;
-
-      console.log(url);
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + auth,
-        },
-      });
+      const response = await fetch(
+        `https://matchjobsbackend-7lo5.onrender.com/job`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + auth,
+          },
+        }
+      );
 
       const data = await response.json();
-      console.log(data);
-      setPosts(data?.posts);
-      setTotalPosts(data?.total);
+      setJobs(data);
+      setTotalJobs(data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -122,19 +131,21 @@ const PostsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
-        <Search placeholder="Search for a post..." />
-        <Link href="/dashboard/posts/add">
+        <Search placeholder="Search for a Jobs..." />
+        <Link href="/dashboard/jobs/add">
           <button className={styles.addButton}>Add New</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
-          {posts?.length > 0 && (
+          {jobs?.length > 0 && (
             <tr>
               <td>Name</td>
               <td>Description</td>
               <td>Created at</td>
-              <td>Video</td>
+              <td>Available</td>
+              <td>Company</td>
+              <td>Sector</td>
             </tr>
           )}
         </thead>
@@ -148,16 +159,17 @@ const PostsPage = () => {
               <td>Carregando...</td>
             </tr>
           )}
-          {posts?.length > 0 ? (
+          {jobs?.length > 0 ? (
             <>
-              {posts?.map((post, id) => (
-                <Post
+              {jobs?.map((jobs, id) => (
+                <Job
                   key={id}
-                  id={post?.id}
-                  name={post?.name}
-                  description={post?.description}
-                  createdAt={post?.createdAt}
-                  videoUrl={post?.videoUrl}
+                  id={jobs?.id}
+                  name={jobs?.name}
+                  description={jobs?.description}
+                  createdAt={jobs?.createdAt}
+                  available={jobs?.available}
+                  company={jobs?.company}
                 />
               ))}
             </>
@@ -172,9 +184,9 @@ const PostsPage = () => {
           )}
         </tbody>
       </table>
-      <Pagination setPage={setPage} page={page} total={totalPosts} />
+      <Pagination setPage={setPage} page={page} total={totalJobs} />
     </div>
   );
 };
 
-export default PostsPage;
+export default JobsPage;

@@ -4,12 +4,12 @@ import styles from "./pagination.module.scss";
 interface PaginationProps {
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  totalPosts: number;
+  total: number;
 }
 
-const Pagination = ({ setPage, page, totalPosts }: PaginationProps) => {
+const Pagination = ({ setPage, page, total }: PaginationProps) => {
   const handleNext = () => {
-    if (page <= totalPosts / 10) {
+    if (page <= total / 10) {
       setPage(page + 1);
     }
   };
@@ -30,7 +30,7 @@ const Pagination = ({ setPage, page, totalPosts }: PaginationProps) => {
       <button
         className={styles.button}
         onClick={() => handleNext()}
-        {...(page > (totalPosts / 10) ? { disabled: true } : {})}
+        {...(page > (total / 10) ? { disabled: true } : {})}
       >
         Next
       </button>

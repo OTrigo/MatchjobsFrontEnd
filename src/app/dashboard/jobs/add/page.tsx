@@ -1,4 +1,4 @@
-import styles from "@/ui/dashboard/vacancys/addVacancy/addVacancy.module.scss";
+import styles from "@/ui/dashboard/jobs/addJob/addJob.module.scss";
 
 const AddVacancyPage = () => {
   return (
@@ -10,7 +10,7 @@ const AddVacancyPage = () => {
           <option value="fun">For fun</option>
           <option value="jobad">Job ad</option>
           <option value="tour">Tour</option>
-          <option value="educational">Educational</option>
+          <option value="educational">Educational</option>  
           <option value="webevent">Web Event</option>
         </select>
         <label htmlFor="tag1">Tag 1</label>

@@ -14,6 +14,9 @@ export interface DataUserProps {
   password: string;
   name: string;
   role: string;
+  companyId?: string;
+  jobsId?: string;
+  portifolio?: string;
 }
 
 export const UserContext = createContext<DataUserProps | null>(null);

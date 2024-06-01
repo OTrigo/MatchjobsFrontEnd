@@ -30,8 +30,8 @@ const menuItems = [
         icon: <MdCollectionsBookmark />,
       },
       {
-        title: "Vacancys",
-        path: "/dashboard/vacancys",
+        title: "Jobs",
+        path: "/dashboard/jobs",
         icon: <MdAssignmentTurnedIn />,
       },
     ],
