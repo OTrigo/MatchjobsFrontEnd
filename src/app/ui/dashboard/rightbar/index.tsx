@@ -18,7 +18,7 @@ const Rightbar = () => {
               Watch our institutional video to learn how the use the MatchJobs
               platform to increase your application numbers!
             </p>
-            <Link href="https://www.youtube.com/" target="_blank">
+            <Link href="https://youtu.be/yVt9o9OouLk" target="_blank">
               <button className={styles.button}>
                 <MdPlayCircleFilled />
                 Watch

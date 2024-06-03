@@ -1,4 +1,4 @@
-import styles from "@/ui/dashboard/jobs/addJob/addJob.module.scss";
+import styles from "../../../ui/dashboard/jobs/addJob/addJob.module.scss";
 
 const AddVacancyPage = () => {
   return (

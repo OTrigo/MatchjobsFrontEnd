@@ -1,13 +1,12 @@
 "use client";
 
-import Card from "@/ui/dashboard/card";
-import Chart from "@/ui/dashboard/chart";
-import styles from "@/ui/dashboard/dashboard.module.scss";
-import Rightbar from "@/ui/dashboard/rightbar";
-import Image from "next/image";
-import jobsStyles from "@/ui/dashboard/jobs/jobs.module.scss";
+import Card from "../ui/dashboard/card";
+import Chart from "../ui/dashboard/chart";
+import styles from "../ui/dashboard/dashboard.module.scss";
+import Rightbar from "../ui/dashboard/rightbar";
+import jobsStyles from "../ui/dashboard/jobs/jobs.module.scss";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "./layout";
+import { UserContext } from "src/contexts/UserContext";
 
 const Applications = () => {
   const [page, setPage] = useState(1);

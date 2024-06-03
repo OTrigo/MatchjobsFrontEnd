@@ -1,7 +1,7 @@
 import { MdSupervisedUserCircle } from "react-icons/md";
 import styles from "./card.module.scss";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/components/app/dashboard/layout";
+import { UserContext } from "src/contexts/UserContext";
 
 const Card = ({ title, type }: any) => {
   console.log(type);

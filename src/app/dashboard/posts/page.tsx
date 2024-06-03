@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "@/ui/dashboard/posts/posts.module.scss";
-import Search from "@/ui/dashboard/search";
+import styles from "../../ui/dashboard/posts/posts.module.scss";
+import Search from "../../ui/dashboard/search";
 import Link from "next/link";
-import Pagination from "@/ui/dashboard/pagination";
+import Pagination from "../../ui/dashboard/pagination";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../layout";
+import { UserContext } from "src/contexts/UserContext";
 
 interface PostProps {
   id: number;

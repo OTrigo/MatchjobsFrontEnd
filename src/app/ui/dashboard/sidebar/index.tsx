@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/ui/dashboard/sidebar/sidebar.module.scss";
+import styles from "../../../ui/dashboard/sidebar/sidebar.module.scss";
 
 import {
   MdAssignmentTurnedIn,
@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 import MenuLink from "./menuLink/menuLink";
 import { useContext } from "react";
-import { UserContext } from "@/components/app/dashboard/layout";
+import { UserContext } from "src/contexts/UserContext";
 
 const menuItems = [
   {

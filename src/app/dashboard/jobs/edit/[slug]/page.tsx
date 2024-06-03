@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/ui/dashboard/posts/addPost/addPost.module.scss";
+import styles from "../../../../ui/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useEffect } from "react";
 
 const EditJobPage = ({ params }: { params: { slug: string } }) => {

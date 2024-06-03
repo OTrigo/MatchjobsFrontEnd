@@ -1,9 +1,9 @@
 "use client";
 
-import styles from "@/ui/dashboard/posts/addPost/addPost.module.scss";
+import styles from "../../../ui/dashboard/posts/addPost/addPost.module.scss";
 import { createClient } from "@supabase/supabase-js";
 import { useState, useContext } from "react";
-import { UserContext } from "../../layout";
+import { UserContext } from "src/contexts/UserContext";
 
 const supabaseUrl = process.env.SUPABASE_URL ?? "";
 const supabaseKey = process.env.SUPABASE_KEY ?? "";

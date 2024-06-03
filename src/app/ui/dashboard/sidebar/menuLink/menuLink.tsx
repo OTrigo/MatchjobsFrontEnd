@@ -1,5 +1,5 @@
 "use client";
-import styles from "@/ui/dashboard/sidebar/menuLink/menuLink.module.scss";
+import styles from "../../../../ui/dashboard/sidebar/menuLink/menuLink.module.scss";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
