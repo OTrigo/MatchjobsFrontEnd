@@ -38,7 +38,7 @@ const Job = ({
     const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
     const auth = rawToken?.access_token;
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/jobs/${id}`,
+      `https://matchjobsbackend-7lo5.onrender.com/job/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -120,7 +120,7 @@ const JobsPage = () => {
 
       const data = await response.json();
       setJobs(data);
-      setTotalJobs(data);
+      setTotalJobs(data.length);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

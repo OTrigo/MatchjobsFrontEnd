@@ -7,6 +7,7 @@ import {
   MdDashboard,
   MdHelpCenter,
   MdLogout,
+  MdPerson,
 } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -34,6 +35,11 @@ const menuItems = [
         path: "/dashboard/jobs",
         icon: <MdAssignmentTurnedIn />,
       },
+      {
+        title: "Users",
+        path: "/dashboard/users",
+        icon: <MdPerson />,
+      }
     ],
   },
   {
@@ -41,7 +47,7 @@ const menuItems = [
     list: [
       {
         title: "Help",
-        path: "/dashboard/help",
+        path: "",
         icon: <MdHelpCenter />,
       },
     ],

@@ -51,3 +51,18 @@
 .noPosts {
   padding: 2rem;
 }
+
+.hover {
+  border-radius: 20px;
+}
+
+.hover:hover {
+  color: #5d57c9;
+  transition: 0.3s;
+  background-color: white;
+  cursor: pointer;
+}
+
+.tableItem {
+  max-height: 5rem;
+}

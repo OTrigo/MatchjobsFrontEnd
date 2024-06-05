@@ -8,6 +8,17 @@
   width: 100%;
 }
 
+.available {
+  padding-left: 2rem;
+}
+
+.idAndAvailable {
+  display: flex;
+  align-items: center;
+  border: 2px solid #2e374a;
+  border-radius: 5px;
+}
+
 .form input,
 .form textarea,
 .form select,
