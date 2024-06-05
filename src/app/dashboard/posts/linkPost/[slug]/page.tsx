@@ -1,106 +1,142 @@
 "use client";
 
+import { useState } from "react";
 import styles from "../../../../ui/dashboard/posts/addPost/addPost.module.scss";
-import { useContext } from "react";
-import { UserContext } from "src/contexts/UserContext";
+import { MutatingDots } from "react-loader-spinner";
 
 interface FormElements extends HTMLFormControlsCollection {
-  description: HTMLInputElement;
-  name: HTMLInputElement;
-  available: HTMLInputElement;
-  companyId: any;
+  id: HTMLInputElement;
 }
 
 interface FormElement extends HTMLFormElement {
   readonly elements: FormElements;
 }
 
+interface RequestJobAndLinkPostProps {
+  auth: string;
+  jobId: string;
+  slug?: string;
+}
+
+const createLinkInPost = async ({ job, auth, slug }: any) => {
+  console.log(job);
+  try {
+    const response = await fetch(
+      `https://matchjobsbackend-7lo5.onrender.com/post/addjob/${slug}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + auth,
+        },
+        body: JSON.stringify({
+          id: job.id,
+          name: job.name,
+          description: job.description,
+          available: job.available,
+          companyId: job.companyId,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      alert("Cannot link the job with the post");
+      console.log(slug, job.id);
+      console.error("Error:", response);
+    }
+
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log("erro:", error);
+    alert(`Error: Job doesn't exist`);
+  }
+};
+
+const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
+  try {
+    const response = await fetch(
+      `https://matchjobsbackend-7lo5.onrender.com/job/${jobId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + auth,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      alert("Error: Cannot fetch job");
+      return;
+    }
+
+    const data = await response.json();
+    if (data === null || data?.length === 0) {
+      alert("Error: Job doesn't exist");
+    }
+
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(auth, jobId);
+    console.log(`https://matchjobsbackend-7lo5.onrender.com/job/${jobId}`);
+    alert(`Error: Cannot fetch job, ${err}`);
+  }
+};
+
 const LinkPostInJob = ({ params }: { params: { slug: string } }) => {
-  const user = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
   const auth = rawToken?.access_token;
 
   const handleSubmit = async (e: React.FormEvent<FormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
-    const { description, name, available } = e.currentTarget.elements;
+    const { id } = e.currentTarget.elements;
+    const slug = params.slug;
 
-    console.log(description, name, available, user?.role);
+    const jobId = id.value;
 
-    const validateAdmin = (role: string | undefined) => {
-      console.log("role", role);
-      if (role == "Admin") {
-        return 1;
-      }
-      alert("You are not allowed to do this.");
-    };
+    const job = await getJob({ auth, jobId });
+    setLoading(false);
 
-    console.log({
-      id: params.slug,
-      name: name?.value,
-      available: available?.value,
-      description: description?.value,
-      companyId: user?.companyId ?? validateAdmin(user?.role),
-    });
-
-    console.log(Date.now())
-
-    try {
-      const response = await fetch(
-        `https://matchjobsbackend-7lo5.onrender.com/post/addjob/${params.slug}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + auth,
-          },
-          body: JSON.stringify({
-            id: params.slug,
-            name: name?.value,
-            createdAt: Date.now(),
-            available: available?.value,
-            companyId: user?.companyId ?? validateAdmin(user?.role),
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        console.error("Error:", response);
-      }
-
-      const data = response.json();
-      return data;
-    } catch (error) {
-      console.log("erro:", error);
-      alert(`Error: ${error}`);
+    if (job) {
+      setLoading(true);
+      const link = await createLinkInPost({ job, auth, slug });
+      console.log(link);
+      setLoading(false);
     }
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div className={styles.idAndAvailable}>
-          <input
-            type="text"
-            placeholder="Title of the Job"
-            name="name"
-            required
-          />
-          <div className={styles.available}>
-            Available <input type="checkbox" id="available" />
+      {loading ? (
+        <MutatingDots
+          visible={true}
+          height="100"
+          width="100"
+          color="#0579bd"
+          secondaryColor="#0579bd"
+          radius="12.5"
+          ariaLabel="mutating-dots-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      ) : (
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.idAndAvailable}>
+            <input
+              type="text"
+              placeholder="Id of the job to link this post"
+              name="id"
+              required
+            />
           </div>
-        </div>
-
-        <textarea
-          name="description"
-          id="description"
-          rows={16}
-          placeholder="Description"
-          defaultValue={""}
-        ></textarea>
-
-        <button type="submit">Submit</button>
-      </form>
+          <button type="submit">Submit</button>
+        </form>
+      )}
     </div>
   );
 };

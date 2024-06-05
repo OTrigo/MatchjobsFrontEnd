@@ -35,11 +35,6 @@ const menuItems = [
         path: "/dashboard/jobs",
         icon: <MdAssignmentTurnedIn />,
       },
-      {
-        title: "Users",
-        path: "/dashboard/users",
-        icon: <MdPerson />,
-      }
     ],
   },
   {
@@ -47,7 +42,7 @@ const menuItems = [
     list: [
       {
         title: "Help",
-        path: "",
+        path: "https://youtu.be/yVt9o9OouLk",
         icon: <MdHelpCenter />,
       },
     ],
