@@ -15,7 +15,7 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const url = `https://matchjobsbackend-7lo5.onrender.com/job/${params.slug}`;
+        const url = `https://mjbackend.azurewebsites.net/job/${params.slug}`;
         const options = {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const url = `https://matchjobsbackend-7lo5.onrender.com/job/${params.slug}`;
+      const url = `https://mjbackend.azurewebsites.net/job/${params.slug}`;
       const options = {
         method: "PUT",
         headers: {

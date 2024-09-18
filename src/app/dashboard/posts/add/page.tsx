@@ -60,7 +60,7 @@ const AddPostPage = () => {
           console.log("formData: ", formData);
 
           const response = await fetch(
-            "https://matchjobsbackend-7lo5.onrender.com/upload-video/",
+            "https://mjbackend.azurewebsites.net/upload-video/",
             {
               method: "POST",
               body: formData,
@@ -90,7 +90,7 @@ const AddPostPage = () => {
         if (videoName.length > 0) {
           try {
             const response = await fetch(
-              "https://matchjobsbackend-7lo5.onrender.com/post/",
+              "https://mjbackend.azurewebsites.net/post/",
               {
                 method: "POST",
                 headers: {

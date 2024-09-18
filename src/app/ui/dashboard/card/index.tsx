@@ -16,7 +16,7 @@ const Card = ({ title, type }: any) => {
       try {
         console.log("ADMIN!");
         const response = await fetch(
-          `https://matchjobsbackend-7lo5.onrender.com/post`,
+          `https://mjbackend.azurewebsites.net/post`,
           {
             method: "GET",
             headers: {
@@ -42,7 +42,7 @@ const Card = ({ title, type }: any) => {
       console.log("JOBS!");
       try {
         const response = await fetch(
-          `https://matchjobsbackend-7lo5.onrender.com/job`,
+          `https://mjbackend.azurewebsites.net/job`,
           {
             method: "GET",
             headers: {
@@ -68,7 +68,7 @@ const Card = ({ title, type }: any) => {
       console.log("APPLICATIONS!");
       try {
         const response = await fetch(
-          `https://matchjobsbackend-7lo5.onrender.com/job/candidates/${
+          `https://mjbackend.azurewebsites.net/job/candidates/${
             user?.companyId ?? 1
           }`,
           {

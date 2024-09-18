@@ -13,7 +13,7 @@ const Applications = () => {
   const [applications, setApplications] = useState<any[]>([]);
   const [totalApplications, setTotalApplications] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const user = useContext(UserContext)
+  const user = useContext(UserContext);
 
   const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
   const auth = rawToken?.access_token;
@@ -25,7 +25,7 @@ const Applications = () => {
   const getapplications = async () => {
     try {
       const response = await fetch(
-        `https://matchjobsbackend-7lo5.onrender.com/job/candidates/${
+        `https://mjbackend.azurewebsites.net/job/candidates/${
           user?.companyId ?? 1
         }`,
         {
@@ -63,9 +63,7 @@ const Applications = () => {
           <tbody>
             <tr>
               <td>
-                <div className={jobsStyles.user}>
-                  Juan Claudio
-                </div>
+                <div className={jobsStyles.user}>Juan Claudio</div>
               </td>
               <td>
                 <span className={`${jobsStyles.status} ${jobsStyles.pending}`}>

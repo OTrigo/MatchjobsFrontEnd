@@ -4,11 +4,13 @@ import { useRouter } from "next/navigation";
 import styles from "./login-card.module.scss";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { MutatingDots } from "react-loader-spinner";
+import Image from "next/image";
 
 const LoginCard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [attempts, setAttempts] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const LoginCard = () => {
       setIsLoading(true);
       console.info("Fazendo request");
       const response = await fetch(
-        "https://matchjobsbackend-7lo5.onrender.com/auth/signIn/",
+        "https://mjbackend.azurewebsites.net/auth/signIn/",
         {
           method: "POST",
           headers: {
@@ -62,11 +64,21 @@ const LoginCard = () => {
       }
     } catch (err) {
       setIsLoading(false);
+      alert("Usuário não existente");
       console.error(err);
     }
   };
   return (
     <main className={styles.login}>
+      <div className={styles.filterOnBackground}>
+        <Image
+          src={"/assets/hands.png"}
+          alt={""}
+          width={550}
+          height={400}
+          className={styles.mainLogoIlustration}
+        />
+      </div>
       {isLoading ? (
         <MutatingDots
           visible={true}
@@ -119,7 +131,7 @@ const LoginCard = () => {
               onClick={handleLoginButtonClick}
               className={styles.formInputSubmitButton}
             >
-              Enviar
+              Login
             </button>
           </div>
         </section>

@@ -24,7 +24,7 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
     const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
     const auth = rawToken?.access_token;
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/post/${id}`,
+      `https://mjbackend.azurewebsites.net/post/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -103,7 +103,7 @@ const PostsPage = () => {
   const getPostsPerPage = async () => {
     setIsLoading(true);
     try {
-      const url = `https://matchjobsbackend-7lo5.onrender.com/post${
+      const url = `https://mjbackend.azurewebsites.net/post${
         user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`
       }`;
 

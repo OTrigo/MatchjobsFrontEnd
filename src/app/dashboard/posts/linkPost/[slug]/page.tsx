@@ -22,7 +22,7 @@ const createLinkInPost = async ({ job, auth, slug }: any) => {
   console.log(job);
   try {
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/post/addjob/${slug}`,
+      `https://mjbackend.azurewebsites.net/post/addjob/${slug}`,
       {
         method: "POST",
         headers: {
@@ -56,7 +56,7 @@ const createLinkInPost = async ({ job, auth, slug }: any) => {
 const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
   try {
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/job/${jobId}`,
+      `https://mjbackend.azurewebsites.net/job/${jobId}`,
       {
         method: "GET",
         headers: {
@@ -80,7 +80,7 @@ const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
     return data;
   } catch (err) {
     console.log(auth, jobId);
-    console.log(`https://matchjobsbackend-7lo5.onrender.com/job/${jobId}`);
+    console.log(`https://mjbackend.azurewebsites.net/job/${jobId}`);
     alert(`Error: Cannot fetch job, ${err}`);
   }
 };

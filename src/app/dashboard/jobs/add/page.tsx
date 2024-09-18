@@ -37,7 +37,7 @@ const AddJobPage = () => {
       };
 
       const postResponse = await fetch(
-        "https://matchjobsbackend-7lo5.onrender.com/job/",
+        "https://mjbackend.azurewebsites.net/job/",
         {
           method: "POST",
           headers: {

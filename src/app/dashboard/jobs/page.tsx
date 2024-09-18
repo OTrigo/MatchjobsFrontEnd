@@ -37,7 +37,7 @@ const Job = ({
     const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
     const auth = rawToken?.access_token;
     const response = await fetch(
-      `https://matchjobsbackend-7lo5.onrender.com/job/${id}`,
+      `https://mjbackend.azurewebsites.net/job/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -106,16 +106,13 @@ const JobsPage = () => {
   const getJobsPerPage = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `https://matchjobsbackend-7lo5.onrender.com/job`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + auth,
-          },
-        }
-      );
+      const response = await fetch(`https://mjbackend.azurewebsites.net/job`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + auth,
+        },
+      });
 
       const data = await response.json();
       setJobs(data);
