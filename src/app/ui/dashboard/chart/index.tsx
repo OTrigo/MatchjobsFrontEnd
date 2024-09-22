@@ -8,7 +8,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import styles from "./chart.module.scss";
 
 const Chart = () => {
   const data = [
@@ -49,8 +48,8 @@ const Chart = () => {
     },
   ];
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Weekly applications</h2>
+    <div className="bg-[--bgSoft] h-fit p-5 rounded-md">
+      <h2 className="font-light text-[--textSoft] mb-5">Weekly applications</h2>
 
       <ResponsiveContainer width="100%" height="90%">
         <LineChart
@@ -66,7 +65,7 @@ const Chart = () => {
         >
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip contentStyle={{background:"#151c2c", border:"none"}} />
+          <Tooltip contentStyle={{ background: "#151c2c", border: "none" }} />
           <Legend />
           <Line
             type="monotone"

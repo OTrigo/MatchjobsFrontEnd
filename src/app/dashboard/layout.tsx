@@ -57,11 +57,11 @@ export default function RootLayout({
     <>
       {!isLoading && (
         <UserContext.Provider value={dataUser}>
-          <section className={styles.container}>
-            <section className={styles.menu}>
+          <section className="flex">
+            <section className="flex-1 bg-[--bgSoft] p-5">
               <Sidebar />
             </section>
-            <section className={styles.content}>
+            <section className="flex-[4] p-5">
               <Navbar />
               {children}
               <Footer />

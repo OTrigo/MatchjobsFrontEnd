@@ -2,9 +2,7 @@
 
 import Card from "../ui/dashboard/card";
 import Chart from "../ui/dashboard/chart";
-import styles from "../ui/dashboard/dashboard.module.scss";
 import Rightbar from "../ui/dashboard/rightbar";
-import jobsStyles from "../ui/dashboard/jobs/jobs.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
 
@@ -49,26 +47,27 @@ const Applications = () => {
 
   return (
     <>
-      <section className={jobsStyles.container}>
-        <h2 className={jobsStyles.title}>Latest Applications</h2>
-        <table className={jobsStyles.table}>
+      <section
+        className="bg-[#182237] p-5 rounded-lg mt-5
+"
+      >
+        <h2 className="flex">Latest Applications</h2>
+        <table className="w-full">
           <thead>
             <tr>
-              <td>Candidate</td>
-              <td>Status</td>
-              <td>Date</td>
-              <td>Vacancy</td>
+              <td className="py-2.5">Candidate</td>
+              <td className="py-2.5">Status</td>
+              <td className="py-2.5">Date</td>
+              <td className="py-2.5">Vacancy</td>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
-                <div className={jobsStyles.user}>Juan Claudio</div>
+              <td className="py-2.5">
+                <div>Juan Claudio</div>
               </td>
               <td>
-                <span className={`${jobsStyles.status} ${jobsStyles.pending}`}>
-                  Pending
-                </span>
+                <span className="">Pending</span>
               </td>
               <td>14.02.2024</td>
               <td>Q.A</td>
@@ -83,9 +82,9 @@ const Applications = () => {
 export default function DashBoard() {
   return (
     <>
-      <section className={styles.wrapper}>
-        <div className={styles.main}>
-          <section className={styles.cards}>
+      <section className="flex gap-5 mt-5 max-w-[80%]">
+        <div className="flex-grow flex flex-col gap-5">
+          <section className="flex gap-5">
             <Card title={"Total de posts"} type={"post"} />
             <Card title={"Total de jobs"} type={"job"} />
             <Card title={"Total de aplicações"} type={"applications"} />
@@ -93,7 +92,7 @@ export default function DashBoard() {
           <Applications />
           <Chart />
         </div>
-        <div className={styles.side}>
+        <div className="flex-[1]">
           <Rightbar />
         </div>
       </section>

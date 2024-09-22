@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../../ui/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useContext } from "react";
 import { UserContext } from "src/contexts/UserContext";
 
@@ -118,26 +117,46 @@ const AddPostPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input type="text" placeholder="title" name="title" required />
-        <div className={styles.content}>
+    <div
+      className="bg-[#182237] p-5 flex rounded-lg mt-5 gap-4 w-full
+"
+    >
+      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="title"
+          name="title"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
+          required
+        />
+        <div className="w-full flex">
           <textarea
             name="desc"
             id="desc"
             rows={16}
             placeholder="Description"
             defaultValue={""}
+            className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
           ></textarea>
           <input
             type="file"
             name="videoFile"
             onChange={handleFileChange}
             id="videoFile"
+            className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

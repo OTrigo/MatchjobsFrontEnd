@@ -1,5 +1,4 @@
 "use client";
-import styles from "../../../../ui/dashboard/sidebar/menuLink/menuLink.module.scss";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,9 +18,8 @@ const MenuLink = ({ item }: MenuLinkProps) => {
     <>
       <Link
         href={item.path}
-        className={`${styles.container} ${
-          pathname === item.path && styles.active
-        }`}
+        className={`p-5 flex items-center gap-2 my-1.5 rounded-md cursor-pointer hover:bg-[#2e374a] 
+ ${pathname === item.path && "bg-[#2e374a]"}`}
       >
         {item.icon}
         {item.title}

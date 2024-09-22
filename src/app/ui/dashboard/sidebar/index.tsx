@@ -62,31 +62,43 @@ const SideBar = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <section className={styles.user}>
+    <div
+      className="h-screen sticky top-10
+"
+    >
+      <section
+        className="flex items-center gap-5 mb-5
+"
+      >
         <Image
           src="https://i.ibb.co/Ntynk9k/noavatar.png"
           alt=""
           width="50"
           height="50"
-          className={styles.userImage}
+          className="rounded-full object-cover
+"
         />
-        <section className={styles.userDetail}>
-          <span className={styles.username}>{user?.name}</span>
-          <span className={styles.userRole}>{user?.role ?? ""}</span>
+        <section className="flex flex-col">
+          <span className="font-medium">{user?.name}</span>
+          <span className="text-[12px] text-[--textSoft]">
+            {user?.role ?? ""}
+          </span>
         </section>
       </section>
-      <ul className={styles.list}>
+      <ul className="list-none">
         {menuItems.map((menuItem) => (
           <li key={menuItem.title}>
-            <span className={styles.subItems}>{menuItem.title}</span>
+            <span className="">{menuItem.title}</span>
             {menuItem.list.map((subItem) => (
               <MenuLink item={subItem} key={subItem.title} />
             ))}
           </li>
         ))}
       </ul>
-      <button className={styles.logout} onClick={() => handleLogout()}>
+      <button
+        className="p-5 flex items-center gap-2 my-1.5 rounded-md cursor-pointer bg-none border-none text-white w-full hover:bg-[#2e374a]"
+        onClick={() => handleLogout()}
+      >
         <MdLogout />
         Logout
       </button>

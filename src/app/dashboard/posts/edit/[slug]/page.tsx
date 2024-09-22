@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../../../ui/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useEffect } from "react";
 
 const EditPostPage = ({ params }: { params: { slug: string } }) => {
@@ -82,12 +81,18 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className="bg-[--bgSoft] p-5 flex rounded-lg mt-5 gap-4 w-full">
+      <form
+        className="flex flex-col w-full
+"
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           placeholder="name"
           name="name"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
           value={formData.name}
           onChange={handleInputChange}
         />
@@ -95,6 +100,8 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
           type="text"
           placeholder="userId"
           name="userId"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
           value={formData.userId}
           onChange={handleInputChange}
         />
@@ -102,21 +109,37 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
           type="text"
           placeholder="jobsId"
           name="jobsId"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
           value={formData.jobsId}
           onChange={handleInputChange}
         />
-        <div className={styles.content}>
+        <div className="w-full flex">
           <textarea
             name="description"
             id="description"
             rows={16}
+            className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
           ></textarea>
         </div>
-        <input type="file" name="video_uploader" onChange={handleFileChange} />
-        <button type="submit">Submit</button>
+        <input
+          type="file"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
+          name="video_uploader"
+          onChange={handleFileChange}
+        />
+        <button
+          type="submit"
+          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

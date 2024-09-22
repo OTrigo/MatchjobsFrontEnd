@@ -1,29 +1,15 @@
 "use client";
 import { usePathname } from "next/navigation";
-import styles from "./navbar.module.scss";
-import {
-  MdNotifications,
-  MdOutlineChat,
-  MdPublic,
-  MdSearch,
-} from "react-icons/md";
+import { MdNotifications, MdOutlineChat, MdPublic } from "react-icons/md";
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>{pathname.split("/").pop()}</div>
-      <div className={styles.menu}>
-        <div className={styles.search}>
-          <MdSearch />
-          <input
-            type="text"
-            name=""
-            placeholder="Search..."
-            id=""
-            className={styles.searchInput}
-          />
-        </div>
-        <div className={styles.icons}>
+    <div className="flex justify-between items-center p-5 rounded-lg bg-[--bgSoft]">
+      <div className="font-bold capitalize text-[--textSoft]">
+        {pathname.split("/").pop()}
+      </div>
+      <div className="flex items-center gap-5">
+        <div className="flex gap-5">
           <MdOutlineChat size={20} />
           <MdNotifications size={20} />
           <MdPublic size={20} />

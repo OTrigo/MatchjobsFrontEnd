@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../ui/dashboard/posts/posts.module.scss";
 import Search from "../../ui/dashboard/search";
 import Link from "next/link";
 import Pagination from "../../ui/dashboard/pagination";
@@ -51,12 +50,12 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
         <></>
       ) : (
         <tr>
-          <td className={styles.hover}>
+          <td className="rounded-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms]">
             <Link href={`posts/linkPost/${id}`}>{name} </Link>
           </td>
-          <td className={styles.tableItem}>{description}</td>
-          <td className={styles.tableItem}>{createdAt}</td>
-          <td className={styles.hover}>
+          <td className="max-h-20">{description}</td>
+          <td className="max-h-20">{createdAt}</td>
+          <td className="roundex-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms]">
             <Link
               href={`https://lfrigfcolhycpfxcxnjn.supabase.co/storage/v1/object/public/matchjobsVideos/${videoUrl}`}
             >
@@ -64,15 +63,17 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
             </Link>
           </td>
 
-          <td className={styles.tableItem}>
-            <div className={styles.actions}>
+          <td className="max-h-20">
+            <div className="flex gap-3">
               <Link href={`posts/edit/${id}`}>
-                <button className={`${styles.button} ${styles.view}`}>
+                <button
+                  className={`py-1 px-3 text-[--text] cursor-pointer border-none bg-[teal]`}
+                >
                   Edit
                 </button>
               </Link>
               <button
-                className={`${styles.button} ${styles.delete}`}
+                className={`py-1 px-3 text-[--text] cursor-pointer border-none bg-[crimson]`}
                 onClick={() => handleDelete(id)}
               >
                 Delete
@@ -130,32 +131,43 @@ const PostsPage = () => {
   console.log(posts);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
+    <div
+      className="bg-[--bgSoft] p-5 rounded-lg mt-5
+"
+    >
+      <div
+        className="flex items-center justify-between
+"
+      >
         <Search placeholder="Search for a post..." />
         <Link href="/dashboard/posts/add">
-          <button className={styles.addButton}>Add New</button>
+          <button
+            className="p-3 bg-[#5d57c9] text-white border-none rounded-md cursor-pointer
+"
+          >
+            Add New
+          </button>
         </Link>
       </div>
-      <table className={styles.table}>
+      <table className="w-full">
         <thead>
           {posts?.length > 0 && (
             <tr>
-              <td>Name</td>
-              <td>Description</td>
-              <td>Created at</td>
-              <td>Video</td>
+              <td className="p-2.5">Name</td>
+              <td className="p-2.5">Description</td>
+              <td className="p-2.5">Created at</td>
+              <td className="p-2.5">Video</td>
             </tr>
           )}
         </thead>
         <tbody>
           {isLoading && (
             <tr>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
+              <td className="p-2.5">Carregando...</td>
+              <td className="p-2.5">Carregando...</td>
+              <td className="p-2.5">Carregando...</td>
+              <td className="p-2.5">Carregando...</td>
+              <td className="p-2.5">Carregando...</td>
             </tr>
           )}
           {posts?.length > 0 ? (
@@ -174,9 +186,7 @@ const PostsPage = () => {
           ) : (
             <>
               {!isLoading && (
-                <div className={styles.noPosts}>
-                  Não há nenhum post no momento
-                </div>
+                <div className="p-8">Não há nenhum post no momento</div>
               )}
             </>
           )}

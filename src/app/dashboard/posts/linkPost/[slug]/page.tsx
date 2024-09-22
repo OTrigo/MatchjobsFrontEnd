@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import styles from "../../../../ui/dashboard/posts/addPost/addPost.module.scss";
 import { MutatingDots } from "react-loader-spinner";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -111,7 +110,7 @@ const LinkPostInJob = ({ params }: { params: { slug: string } }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className="bg-[--bgSoft] p-5 flex rounded-lg mt-5 gap-4 w-full">
       {loading ? (
         <MutatingDots
           visible={true}
@@ -125,16 +124,22 @@ const LinkPostInJob = ({ params }: { params: { slug: string } }) => {
           wrapperClass=""
         />
       ) : (
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.idAndAvailable}>
+        <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+          <div className="flex items-center border-2 border-[#2e374a] rounded-md">
             <input
               type="text"
               placeholder="Id of the job to link this post"
               name="id"
+              className="p-8 bg-transparent text-white border-2 border-[#2e374a] rounded-md h-full my-4"
               required
             />
           </div>
-          <button type="submit">Submit</button>
+          <button
+            className="p-8 bg-transparent text-white border-2 border-[#2e374a] rounded-md h-full my-4"
+            type="submit"
+          >
+            Submit
+          </button>
         </form>
       )}
     </div>

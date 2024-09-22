@@ -1,5 +1,4 @@
 import { MdSupervisedUserCircle } from "react-icons/md";
-import styles from "./card.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
 
@@ -103,13 +102,14 @@ const Card = ({ title, type }: any) => {
 
   return (
     <>
-      <section className={styles.container}>
+      <section className="bg-[--bgSoft] p-5 rounded-lg flex gap-5 cursor-pointer w-full hover:bg-[#2e374a]
+">
         <MdSupervisedUserCircle size={24} />
-        <div className={styles.texts}>
-          <span className={styles.title}>
+        <div className="flex flex-col gap-5">
+          <span className="flex">
             {title} {user?.role === "Admin" && "(Admin Mode)"}
           </span>
-          <span className={styles.number}>{displayValue}</span>
+          <span className={"text-[24px] font-medium"}>{displayValue}</span>
         </div>
       </section>
     </>

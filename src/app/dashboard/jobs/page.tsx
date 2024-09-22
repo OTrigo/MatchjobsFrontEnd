@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../ui/dashboard/jobs/jobs.module.scss";
 import Search from "../../ui/dashboard/search";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -70,14 +69,12 @@ const Job = ({
           <td>{company?.name}</td>
           <td>{company?.sector}</td>
           <td>
-            <div className={styles.actions}>
+            <div className="flex gap-3">
               <Link href={`/dashboard/jobs/edit/${id}`}>
-                <button className={`${styles.button} ${styles.view}`}>
-                  Edit
-                </button>
+                <button className={`py-1 px-3 bg-[teal]`}>Edit</button>
               </Link>
               <button
-                className={`${styles.button} ${styles.delete}`}
+                className={`py-1 px-3 rounded-md cursor-pointer border-none text-[--text] bg-[crimson]`}
                 onClick={() => handleDelete(id)}
               >
                 Delete
@@ -125,34 +122,36 @@ const JobsPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
+    <div className="bg-[--bgSoft] p-5 rounded-xl mt-5">
+      <div className="flex items-center justify-between">
         <Search placeholder="Search for a Jobs..." />
         <Link href="/dashboard/jobs/add">
-          <button className={styles.addButton}>Add New</button>
+          <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
+            Add New
+          </button>
         </Link>
       </div>
-      <table className={styles.table}>
+      <table className="w-full">
         <thead>
           {jobs?.length > 0 && (
             <tr>
-              <td>Name</td>
-              <td>Description</td>
-              <td>Created at</td>
-              <td>Available</td>
-              <td>Company</td>
-              <td>Sector</td>
+              <td className="p-3">Name</td>
+              <td className="p-3">Description</td>
+              <td className="p-3">Created at</td>
+              <td className="p-3">Available</td>
+              <td className="p-3">Company</td>
+              <td className="p-3">Sector</td>
             </tr>
           )}
         </thead>
         <tbody>
           {isLoading && (
             <tr>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
-              <td>Carregando...</td>
+              <td className="p-3">Carregando...</td>
+              <td className="p-3">Carregando...</td>
+              <td className="p-3">Carregando...</td>
+              <td className="p-3">Carregando...</td>
+              <td className="p-3">Carregando...</td>
             </tr>
           )}
           {jobs?.length > 0 ? (
@@ -172,7 +171,7 @@ const JobsPage = () => {
           ) : (
             <>
               {!isLoading && (
-                <div className={styles.noPosts}>
+                <div className="flex p-8">
                   Não há nenhum post no momento
                 </div>
               )}

@@ -1,9 +1,5 @@
 "use client";
 
-import styles from "../../../ui/dashboard/posts/addPost/addPost.module.scss";
-import { useState, useContext } from "react";
-import { UserContext } from "src/contexts/UserContext";
-
 interface FormElements extends HTMLFormControlsCollection {
   title: HTMLInputElement;
   desc: HTMLTextAreaElement;
@@ -59,17 +55,20 @@ const AddJobPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input type="text" placeholder="title" name="title" required />
-        <input type="text" placeholder="companyId" name="companyId" required />
-        <div className={styles.content}>
+    <div className="flex bg-[--bgSoft] p-5 rounded-xl mt-5 gap-4 w-full">
+      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+        <input type="text" placeholder="title" name="title"
+        className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full my-4" required />
+        <input type="text" placeholder="companyId" name="companyId"
+        className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full my-4" required />
+        <div className={"flex w-full"}>
           <textarea
             name="desc"
             id="desc"
             rows={16}
             placeholder="Description"
             defaultValue={""}
+            className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full w-full my-4 resize-none"
           ></textarea>
         </div>
         <button type="submit">Submit</button>

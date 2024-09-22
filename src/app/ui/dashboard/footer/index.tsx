@@ -1,11 +1,12 @@
-import styles from "./footer.module.scss";
-
 const Footer = () => {
   return (
     <>
-      <section className={styles.container}>
-        <div className={styles.logo}>MatchJobs</div>
-        <div className={styles.text}>All rights reserved.</div>
+      <section
+        className="flex items-center justify-between mt-7 text-[#b7bac1]
+"
+      >
+        <div className="font-bold">MatchJobs</div>
+        <div className="font-[.75rem]">All rights reserved.</div>
       </section>
     </>
   );
