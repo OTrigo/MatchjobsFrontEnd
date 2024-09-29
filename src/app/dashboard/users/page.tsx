@@ -1,9 +1,9 @@
 "use client";
 
-import styles from "../../ui/dashboard/posts/posts.module.scss";
-import Search from "../../ui/dashboard/search";
+import styles from "../../components/dashboard/posts/posts.module.scss";
+import Search from "../../components/dashboard/search";
 import Link from "next/link";
-import Pagination from "../../ui/dashboard/pagination";
+import Pagination from "../../components/dashboard/pagination";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
 

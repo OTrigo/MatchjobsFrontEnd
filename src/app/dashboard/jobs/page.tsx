@@ -1,6 +1,6 @@
 "use client";
 
-import Search from "../../ui/dashboard/search";
+import Search from "../../components/dashboard/search";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -171,9 +171,7 @@ const JobsPage = () => {
           ) : (
             <>
               {!isLoading && (
-                <div className="flex p-8">
-                  Não há nenhum post no momento
-                </div>
+                <div className="flex p-8">Não há nenhum post no momento</div>
               )}
             </>
           )}

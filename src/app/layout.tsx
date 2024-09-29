@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import 'tailwind.css';
+import localFont from "next/font/local";
+import "tailwind.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+
+const groteskSpace = localFont({
+  src: [
+    {
+      path: "./fonts/SpaceGrotesk-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-grotesk",
+});
 
 export const metadata: Metadata = {
   title: "MatchJobs",
@@ -16,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${inter.className} bg-[--bg]`}>{children}</body>
+      <body className={`${inter.variable} ${groteskSpace.variable} bg-[--bg]`}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import Card from "../ui/dashboard/card";
-import Chart from "../ui/dashboard/chart";
-import Rightbar from "../ui/dashboard/rightbar";
+import Card from "../components/dashboard/card";
+import Chart from "../components/dashboard/chart";
+import Rightbar from "../components/dashboard/rightbar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
 

@@ -1,9 +1,8 @@
 "use client";
 
-import Sidebar from "../ui/dashboard/sidebar";
-import Navbar from "../ui/dashboard/navbar";
-import styles from "../ui/dashboard/dashboard.module.scss";
-import Footer from "../ui/dashboard/footer";
+import Sidebar from "../components/dashboard/sidebar";
+import Navbar from "../components/dashboard/navbar";
+import Footer from "../components/dashboard/footer";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";

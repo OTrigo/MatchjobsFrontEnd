@@ -1,13 +1,11 @@
 "use client";
-import styles from "../../../ui/dashboard/sidebar/sidebar.module.scss";
 
 import {
   MdAssignmentTurnedIn,
   MdCollectionsBookmark,
   MdDashboard,
   MdHelpCenter,
-  MdLogout,
-  MdPerson,
+  MdLogout
 } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

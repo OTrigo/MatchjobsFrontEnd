@@ -1,4 +1,4 @@
-import LoginCard from "./ui/login/LoginCard";
+import LoginCard from "./components/login/LoginCard";
 
 export default function Home() {
   return (

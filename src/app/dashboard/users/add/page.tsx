@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../../../ui/dashboard/posts/addPost/addPost.module.scss";
+import styles from "../../../components/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useContext } from "react";
 import { UserContext } from "src/contexts/UserContext";
 
