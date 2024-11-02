@@ -3,10 +3,14 @@
 import Search from "../../components/dashboard/search";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaCheckCircle, FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { VscError, VscSparkle } from "react-icons/vsc";
+import AIButton from "src/app/components/common/AIButton";
 
 interface JobsProps {
   id: number;
-  name: string;
+  title: string;
   description: string;
   createdAt: string;
   available: boolean;
@@ -22,7 +26,7 @@ interface JobsProps {
 
 const Job = ({
   id,
-  name,
+  title,
   description,
   createdAt,
   available,
@@ -43,7 +47,7 @@ const Job = ({
           "Content-Type": "application/json",
           Authorization: "Bearer" + auth,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -62,22 +66,21 @@ const Job = ({
         <></>
       ) : (
         <tr>
-          <td>{name}</td>
-          <td>{description}</td>
-          <td>{createdAt}</td>
-          <td>{available ? "Yes" : "No"}</td>
-          <td>{company?.name}</td>
-          <td>{company?.sector}</td>
+          <td className="p-3">{title}</td>
+          <td className="p-3">{description}</td>
+          <td className="p-3">{createdAt}</td>
+          <td className="flex p-3 items-center justify-start h-[72px]">
+            {available ? <FaCheckCircle /> : <VscError />}
+          </td>
+          <td className="p-3">{company?.name}</td>
+          <td className="p-3">{company?.sector}</td>
           <td>
             <div className="flex gap-3">
-              <Link href={`/dashboard/jobs/edit/${id}`}>
-                <button className={`py-1 px-3 bg-[teal]`}>Edit</button>
+              <Link href={`/dashboard/jobs/edit/${id}`} className="h-4 w-4">
+                <FaRegEdit height={24} width={24} />
               </Link>
-              <button
-                className={`py-1 px-3 rounded-md cursor-pointer border-none text-[--text] bg-[crimson]`}
-                onClick={() => handleDelete(id)}
-              >
-                Delete
+              <button className={`h-4 w-4`} onClick={() => handleDelete(id)}>
+                <MdDelete height={24} width={24} />
               </button>
             </div>
           </td>
@@ -115,9 +118,9 @@ const JobsPage = () => {
       setJobs(data);
       setTotalJobs(data.length);
       setIsLoading(false);
-    } catch (error) {
+    } catch (err) {
       setIsLoading(false);
-      console.error(error);
+      console.error(err);
     }
   };
 
@@ -125,11 +128,14 @@ const JobsPage = () => {
     <div className="bg-[--bgSoft] p-5 rounded-xl mt-5">
       <div className="flex items-center justify-between">
         <Search placeholder="Search for a Jobs..." />
-        <Link href="/dashboard/jobs/add">
-          <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
-            Add New
-          </button>
-        </Link>
+        <div className="inline-flex gap-4 w-fit">
+          <Link href="/dashboard/jobs/add">
+            <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
+              Add New
+            </button>
+          </Link>
+          <AIButton />
+        </div>
       </div>
       <table className="w-full">
         <thead>
@@ -160,7 +166,7 @@ const JobsPage = () => {
                 <Job
                   key={id}
                   id={jobs?.id}
-                  name={jobs?.name}
+                  title={jobs?.title}
                   description={jobs?.description}
                   createdAt={jobs?.createdAt}
                   available={jobs?.available}

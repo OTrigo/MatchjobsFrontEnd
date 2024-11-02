@@ -7,7 +7,6 @@ interface PaginationProps {
 }
 
 const Pagination = ({ setPage, page, total }: PaginationProps) => {
-  console.log(page, total, total / 10, page > total / 10);
   const handleNext = () => {
     if (page <= total / 10) {
       setPage(page + 1);

@@ -6,15 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
   "dependencies": {
+    "@next/env": "^15.0.0",
     "@supabase/supabase-js": "^2.43.4",
     "aws4": "^1.12.0",
     "jwt-decode": "^4.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
     "next": "14.1.0",
+    "openai": "^4.68.1",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
@@ -31,6 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.12",
     "typescript": "^5"
   }

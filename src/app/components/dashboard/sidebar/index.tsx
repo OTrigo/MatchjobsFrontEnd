@@ -5,7 +5,7 @@ import {
   MdCollectionsBookmark,
   MdDashboard,
   MdHelpCenter,
-  MdLogout
+  MdLogout,
 } from "react-icons/md";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -54,14 +54,13 @@ const SideBar = () => {
   const handleLogout = () => {
     if (window !== undefined) {
       localStorage.removeItem("user");
-      console.info("deslogando...");
       router.replace("/");
     }
   };
 
   return (
     <div
-      className="h-screen sticky top-10
+      className="h-screen sticky top-10 z-10
 "
     >
       <section

@@ -51,7 +51,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -81,9 +81,9 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   };
 
   return (
-    <div className="bg-[--bgSoft] p-5 flex rounded-lg mt-5 gap-4 w-full">
+    <div className="bg-[--bgSoft] p-5 flex rounded-lg mt-5 w-full">
       <form
-        className="flex flex-col w-full
+        className="flex flex-col w-full h-fit gap-4
 "
         onSubmit={handleSubmit}
       >
@@ -91,51 +91,35 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
           type="text"
           placeholder="name"
           name="name"
-          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+          className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
 "
           value={formData.name}
           onChange={handleInputChange}
         />
-        <input
-          type="text"
-          placeholder="userId"
-          name="userId"
-          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
-"
-          value={formData.userId}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          placeholder="jobsId"
-          name="jobsId"
-          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
-"
-          value={formData.jobsId}
-          onChange={handleInputChange}
-        />
-        <div className="w-full flex">
+
+        <div className="w-full h-fit flex grow gap-5">
           <textarea
             name="description"
             id="description"
             rows={16}
-            className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+            className="w-full px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full
 "
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
           ></textarea>
-        </div>
-        <input
-          type="file"
-          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+          <input
+            type="file"
+            className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
 "
-          name="video_uploader"
-          onChange={handleFileChange}
-        />
+            name="video_uploader"
+            onChange={handleFileChange}
+          />
+        </div>
+
         <button
           type="submit"
-          className="p-8 bg-transparent text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
+          className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full
 "
         >
           Submit

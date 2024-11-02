@@ -3,13 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { MutatingDots } from "react-loader-spinner";
-import Image from "next/image";
-import {
-  MdOutlineArrowRight,
-  MdPeopleAlt,
-  MdPeopleOutline,
-} from "react-icons/md";
-import CustomIcon from "../helpers/CustomIcon";
+import { MdOutlineArrowRight, MdPeopleAlt } from "react-icons/md";
 
 const LoginCard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,8 +48,10 @@ const LoginCard = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
-        }
+        },
       );
+
+      console.log(response);
 
       if (!response.ok) {
         setIsLoading(false);
@@ -63,8 +59,8 @@ const LoginCard = () => {
       } else if (response.status === 201) {
         setIsLoading(false);
         const data = await response.json();
-        console.log(JSON.stringify(data));
         localStorage.setItem("user", JSON.stringify(data));
+        console.log(data);
         router.push("/dashboard");
       }
     } catch (err) {
@@ -107,7 +103,7 @@ const LoginCard = () => {
                 <div className="flex gap-4">
                   <input
                     type="email"
-                    className="flex rounded-md py-2 px-4 w-full"
+                    className="flex rounded-md py-2 px-4 w-full text-black"
                     id="input-email"
                     placeholder="joao@example.com"
                     onInput={handleEmailChange}
@@ -117,7 +113,7 @@ const LoginCard = () => {
                 <div className="">
                   <input
                     type="password"
-                    className="flex rounded-md py-2 px-4 w-full"
+                    className="flex rounded-md py-2 px-4 w-full text-black"
                     id="input-password"
                     placeholder="*****"
                     onInput={handlePasswordChange}

@@ -1,11 +1,13 @@
 "use client";
 
-import styles from "../../components/dashboard/posts/posts.module.scss";
 import Search from "../../components/dashboard/search";
 import Link from "next/link";
 import Pagination from "../../components/dashboard/pagination";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import AIButton from "src/app/components/common/AIButton";
 
 interface PostProps {
   id: number;
@@ -31,7 +33,7 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
           "Content-Type": "application/json",
           Authorization: "Bearer" + auth,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -44,38 +46,40 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
     }
   };
 
-  console.log(videoUrl);
   return (
     <>
       {isLoading || hasDeleted ? (
         <></>
       ) : (
         <tr>
-          <td className={styles.hover}>
+          <td
+            className={
+              "rounded-[20px] text-[#5d57c9] transition duration-300 bg-white cursor-pointer"
+            }
+          >
             <Link href={`posts/linkPost/${id}`}>{name} </Link>
           </td>
-          <td className={styles.tableItem}>{description}</td>
-          <td className={styles.tableItem}>{createdAt}</td>
-          <td className={styles.hover}>
+          <td className={"max-h-[5rem]"}>{description}</td>
+          <td className={"max-h-[5rem]"}>{createdAt}</td>
+          <td
+            className={
+              "rounded-[20px] text-[#5d57c9] transition duration-300 bg-white cursor-pointer"
+            }
+          >
             <Link
-              href={`https://lfrigfcolhycpfxcxnjn.supabase.co/storage/v1/object/public/matchjobsVideos/${videoUrl}`}
+              href={`https://matchjobsuploads.blob.core.windows.net/videoupload/${videoUrl}`}
             >
               Preview
             </Link>
           </td>
 
-          <td className={styles.tableItem}>
-            <div className={styles.actions}>
-              <Link href={`posts/edit/${id}`}>
-                <button className={`${styles.button} ${styles.view}`}>
-                  Edit
-                </button>
+          <td className={"max-h-[5rem]"}>
+            <div className={"flex gap-[10px]"}>
+              <Link href={`/dashboard/jobs/edit/${id}`} className="h-4 w-4">
+                <FaRegEdit height={24} width={24} />
               </Link>
-              <button
-                className={`${styles.button} ${styles.delete}`}
-                onClick={() => handleDelete(id)}
-              >
-                Delete
+              <button className={`h-4 w-4`} onClick={() => handleDelete(id)}>
+                <MdDelete height={24} width={24} />
               </button>
             </div>
           </td>
@@ -97,7 +101,6 @@ const PostsPage = () => {
 
   useEffect(() => {
     getPostsPerPage();
-    console.log(posts, totalPosts);
   }, [page, totalPosts]);
 
   const getPostsPerPage = async () => {
@@ -107,7 +110,6 @@ const PostsPage = () => {
         user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`
       }`;
 
-      console.log(posts);
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -117,7 +119,6 @@ const PostsPage = () => {
       });
 
       const data = await response.json();
-      console.log(data);
       setPosts(data?.posts);
       setTotalPosts(data?.total);
       setIsLoading(false);
@@ -127,17 +128,20 @@ const PostsPage = () => {
     }
   };
 
-  console.log(posts);
-
   return (
-    <div className={styles.container}>
-      <div className={styles.top}>
+    <div className={`bg-[var(--bgSoft)] p-[20px] rounded-[10px] mt-[20px]`}>
+      <div className={`flex items-center justify-between`}>
         <Search placeholder="Search for a post..." />
-        <Link href="/dashboard/posts/add">
-          <button className={styles.addButton}>Add New</button>
-        </Link>
+        <div className="inline-flex gap-4 w-fit">
+          <Link href="/dashboard/posts/add">
+            <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
+              Add New
+            </button>
+          </Link>
+          <AIButton />
+        </div>
       </div>
-      <table className={styles.table}>
+      <table className={`w-full`}>
         <thead>
           {posts?.length > 0 && (
             <tr>
@@ -174,9 +178,7 @@ const PostsPage = () => {
           ) : (
             <>
               {!isLoading && (
-                <div className={styles.noPosts}>
-                  Não há nenhum post no momento
-                </div>
+                <div className={`p-8`}>Não há nenhum post no momento</div>
               )}
             </>
           )}

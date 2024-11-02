@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../../../components/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useEffect } from "react";
 
 const EditJobPage = ({ params }: { params: { slug: string } }) => {
@@ -39,7 +38,7 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
   }, [params.slug, auth]);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -62,30 +61,23 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
       };
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log("Updated job:", data);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className="bg-[var(--bgSoft)] p-5 flex rounded-lg mt-5 gap-4 w-full">
+      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="name"
           name="name"
           value={formData.name}
           onChange={handleInputChange}
+          className="p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md w-full mt-4"
         />
-        <input
-          type="text"
-          placeholder="companyId"
-          name="companyId"
-          value={formData.companyId}
-          onChange={handleInputChange}
-        />
-        <div className={styles.content}>
+        <div className="flex w-full">
           <textarea
             name="description"
             id="description"
@@ -93,9 +85,16 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
+            className="w-full resize-none p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md mt-4"
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full
+"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

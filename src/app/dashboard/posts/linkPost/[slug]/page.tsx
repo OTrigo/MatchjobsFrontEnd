@@ -18,7 +18,6 @@ interface RequestJobAndLinkPostProps {
 }
 
 const createLinkInPost = async ({ job, auth, slug }: any) => {
-  console.log(job);
   try {
     const response = await fetch(
       `https://mjbackend.azurewebsites.net/post/addjob/${slug}`,
@@ -35,19 +34,18 @@ const createLinkInPost = async ({ job, auth, slug }: any) => {
           available: job.available,
           companyId: job.companyId,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
       alert("Cannot link the job with the post");
-      console.log(slug, job.id);
       console.error("Error:", response);
     }
 
     const data = response.json();
     return data;
   } catch (error) {
-    console.log("erro:", error);
+    console.error("erro:", error);
     alert(`Error: Job doesn't exist`);
   }
 };
@@ -62,7 +60,7 @@ const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
           "Content-Type": "application/json",
           Authorization: "Bearer" + auth,
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -75,11 +73,8 @@ const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
       alert("Error: Job doesn't exist");
     }
 
-    console.log(data);
     return data;
   } catch (err) {
-    console.log(auth, jobId);
-    console.log(`https://mjbackend.azurewebsites.net/job/${jobId}`);
     alert(`Error: Cannot fetch job, ${err}`);
   }
 };
@@ -104,7 +99,6 @@ const LinkPostInJob = ({ params }: { params: { slug: string } }) => {
     if (job) {
       setLoading(true);
       const link = await createLinkInPost({ job, auth, slug });
-      console.log(link);
       setLoading(false);
     }
   };

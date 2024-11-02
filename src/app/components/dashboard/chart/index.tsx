@@ -1,4 +1,5 @@
 "use client";
+import { useContext, useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -10,43 +11,70 @@ import {
 } from "recharts";
 
 const Chart = () => {
-  const data = [
+  const [chartData, setChartData] = useState([
     {
       name: "Monday",
-      lastWeek: 10,
-      actualWeek: 20,
+      actualWeek: 0,
     },
     {
       name: "Tuesday",
-      lastWeek: 3000,
-      actualWeek: 1398,
+      actualWeek: 0,
     },
     {
       name: "Wednesday",
-      lastWeek: 2000,
-      actualWeek: 9800,
+      actualWeek: 0,
     },
     {
       name: "Thursday",
-      lastWeek: 2780,
-      actualWeek: 3908,
+      actualWeek: 0,
     },
     {
       name: "Friday",
-      lastWeek: 1890,
-      actualWeek: 4800,
+      actualWeek: 0,
     },
     {
       name: "Saturday",
-      lastWeek: 2390,
-      actualWeek: 3800,
+      actualWeek: 0,
     },
     {
       name: "Sunday",
-      lastWeek: 3490,
-      actualWeek: 4300,
+      actualWeek: 0,
     },
-  ];
+  ]);
+  const [loading, setIsLoading] = useState(true);
+
+  const rawToken = localStorage.getItem("user") ?? "";
+  useEffect(() => {
+    getChartInfo();
+  }, []);
+  const getChartInfo = async () => {
+    if (!rawToken) return;
+    const auth = JSON.parse(rawToken)?.access_token;
+    try {
+      const response = await fetch(
+        `https://mjbackend.azurewebsites.net/company/applications/weekly`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (Object.keys(data)?.length !== 0) {
+        setChartData(data);
+      }
+      console.log("Do not have data");
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-[--bgSoft] h-fit p-5 rounded-md">
       <h2 className="font-light text-[--textSoft] mb-5">Weekly applications</h2>
@@ -55,7 +83,7 @@ const Chart = () => {
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 30,
@@ -72,12 +100,6 @@ const Chart = () => {
             dataKey="actualWeek"
             stroke="#8884d8"
             strokeDasharray="5 5"
-          />
-          <Line
-            type="monotone"
-            dataKey="lastWeek"
-            stroke="#82ca9d"
-            strokeDasharray="3 4 5 2"
           />
         </LineChart>
       </ResponsiveContainer>

@@ -8,11 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily:{
-        inter: ['var(--font-inter)'],
-        grotesk: ['var(--font-grotesk)']
-      }
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+        grotesk: ["var(--font-grotesk)"],
+      },
     },
   },
   plugins: [],
-}
+};

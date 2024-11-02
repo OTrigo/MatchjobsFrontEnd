@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../../components/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useContext } from "react";
 import { UserContext } from "src/contexts/UserContext";
 
@@ -50,25 +49,23 @@ const AddPostPage = () => {
         const userId = user?.id ?? "";
 
         try {
-          // Cria um novo objeto FormData
           const formData = new FormData();
-          formData.append("file", file); // Anexa o arquivo
+          formData.append("file", file);
           formData.append("nameFile", nameFile);
           formData.append("name", name);
           formData.append("description", description ?? "");
           formData.append("userId", userId.toString());
-          console.log("formData: ", formData);
 
           const response = await fetch(
-            "https://mjbackend.azurewebsites.net/upload-video/",
+            "https://mjbackend.azurewebsites.net/upload/upload-video/",
             {
               method: "POST",
               body: formData,
-            }
+            },
           );
 
           if (response.ok) {
-            console.log("Video uploaded");
+            console.info("Video uploaded");
           }
         } catch (error) {
           console.error(error);
@@ -98,12 +95,13 @@ const AddPostPage = () => {
                   Authentication: "Bearer " + auth,
                 },
                 body: JSON.stringify(postData),
-              }
+              },
             );
+
+            console.log(response);
 
             if (!response.ok) {
               alert("Failed to submit post");
-              throw new Error("Failed to upload video");
             } else {
               alert("Post successfully submitted!");
             }
@@ -118,26 +116,39 @@ const AddPostPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input type="text" placeholder="title" name="title" required />
-        <div className={styles.content}>
+    <div className="bg-[var(--bgSoft)] p-5 flex rounded-lg mt-5 gap-4 w-full">
+      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="title"
+          name="title"
+          required
+          className="p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md w-full mt-4"
+        />
+        <div className="flex w-full mt-4">
           <textarea
             name="desc"
             id="desc"
             rows={16}
             placeholder="Description"
-            defaultValue={""}
+            defaultValue=""
+            className="w-full resize-none p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md"
           ></textarea>
-          <input
-            type="file"
-            name="videoFile"
-            onChange={handleFileChange}
-            id="videoFile"
-            required
-          />
         </div>
-        <button type="submit">Submit</button>
+        <input
+          type="file"
+          name="videoFile"
+          onChange={handleFileChange}
+          id="videoFile"
+          required
+          className="w-1/2 h-full mt-4"
+        />
+        <button
+          type="submit"
+          className="w-full p-8 bg-teal-500 text-[var(--text)] border-none cursor-pointer mt-8"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

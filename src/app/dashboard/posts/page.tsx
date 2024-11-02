@@ -5,16 +5,20 @@ import Link from "next/link";
 import Pagination from "../../components/dashboard/pagination";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
+import { VscSparkle } from "react-icons/vsc";
+import AIButton from "src/app/components/common/AIButton";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 interface PostProps {
   id: number;
-  name: string;
+  title: string;
   description: string;
   createdAt: string;
   videoUrl: string;
 }
 
-const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
+const Post = ({ id, title, description, createdAt, videoUrl }: PostProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasDeleted, setHasDeleted] = useState(false);
 
@@ -30,7 +34,7 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
           "Content-Type": "application/json",
           Authorization: "Bearer" + auth,
         },
-      }
+      },
     );
 
     if (response.ok) {
@@ -43,40 +47,38 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
     }
   };
 
-  console.log(videoUrl);
   return (
     <>
       {isLoading || hasDeleted ? (
         <></>
       ) : (
         <tr>
-          <td className="rounded-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms]">
-            <Link href={`posts/linkPost/${id}`}>{name} </Link>
+          <td className="rounded-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms] px-2.5 py-1">
+            <Link href={`posts/linkPost/${id}`}>{title} </Link>
           </td>
-          <td className="max-h-20">{description}</td>
-          <td className="max-h-20">{createdAt}</td>
-          <td className="roundex-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms]">
-            <Link
-              href={`https://lfrigfcolhycpfxcxnjn.supabase.co/storage/v1/object/public/matchjobsVideos/${videoUrl}`}
-            >
-              Preview
-            </Link>
+          <td className="max-h-20 px-2.5 py-1">{description}</td>
+          <td className="max-h-20 px-2.5 py-1">{Date.parse(createdAt)}</td>
+
+          <td className="roundex-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms] px-2.5 py-1">
+            {videoUrl && (
+              <Link
+                href={`https://mjbackend.azurewebsites.net/upload/getVideo/${videoUrl}`}
+              >
+                Preview
+              </Link>
+            )}
           </td>
 
           <td className="max-h-20">
             <div className="flex gap-3">
               <Link href={`posts/edit/${id}`}>
-                <button
-                  className={`py-1 px-3 text-[--text] cursor-pointer border-none bg-[teal]`}
-                >
-                  Edit
-                </button>
+                <FaRegEdit height={24} width={24} />
               </Link>
               <button
-                className={`py-1 px-3 text-[--text] cursor-pointer border-none bg-[crimson]`}
+                className={`py-1 px-3 text-[--text] cursor-pointer border-none`}
                 onClick={() => handleDelete(id)}
               >
-                Delete
+                <MdDelete height={24} width={24} />
               </button>
             </div>
           </td>
@@ -98,17 +100,14 @@ const PostsPage = () => {
 
   useEffect(() => {
     getPostsPerPage();
-    console.log(posts, totalPosts);
   }, [page, totalPosts]);
 
   const getPostsPerPage = async () => {
     setIsLoading(true);
     try {
       const url = `https://mjbackend.azurewebsites.net/post${
-        user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`
+        user?.role !== "Admin" ? `/myposts/${user?.id}` : `/page/${page}`
       }`;
-
-      console.log(posts);
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -128,8 +127,6 @@ const PostsPage = () => {
     }
   };
 
-  console.log(posts);
-
   return (
     <div
       className="bg-[--bgSoft] p-5 rounded-lg mt-5
@@ -140,14 +137,14 @@ const PostsPage = () => {
 "
       >
         <Search placeholder="Search for a post..." />
-        <Link href="/dashboard/posts/add">
-          <button
-            className="p-3 bg-[#5d57c9] text-white border-none rounded-md cursor-pointer
-"
-          >
-            Add New
-          </button>
-        </Link>
+        <div className="inline-flex gap-4 w-fit">
+          <Link href="/dashboard/posts/add">
+            <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
+              Add New
+            </button>
+          </Link>
+          <AIButton />
+        </div>
       </div>
       <table className="w-full">
         <thead>
@@ -176,7 +173,7 @@ const PostsPage = () => {
                 <Post
                   key={id}
                   id={post?.id}
-                  name={post?.name}
+                  title={post?.title}
                   description={post?.description}
                   createdAt={post?.createdAt}
                   videoUrl={post?.videoUrl}

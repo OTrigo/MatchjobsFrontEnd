@@ -41,7 +41,7 @@ const AddJobPage = () => {
             Authentication: "Bearer " + auth,
           },
           body: JSON.stringify(postData),
-        }
+        },
       );
 
       if (postResponse.ok) {
@@ -55,12 +55,16 @@ const AddJobPage = () => {
   };
 
   return (
-    <div className="flex bg-[--bgSoft] p-5 rounded-xl mt-5 gap-4 w-full">
+    <div className="flex bg-[--bgSoft] p-5 rounded-xl mt-5 gap-4 w-full justify-center items-center">
+      <span>Adding a Job</span>
       <form className="flex flex-col w-full" onSubmit={handleSubmit}>
-        <input type="text" placeholder="title" name="title"
-        className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full my-4" required />
-        <input type="text" placeholder="companyId" name="companyId"
-        className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full my-4" required />
+        <input
+          type="text"
+          placeholder="Title"
+          name="title"
+          className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4"
+          required
+        />
         <div className={"flex w-full"}>
           <textarea
             name="desc"
@@ -68,10 +72,15 @@ const AddJobPage = () => {
             rows={16}
             placeholder="Description"
             defaultValue={""}
-            className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-full w-full my-4 resize-none"
+            className="p-8 bg-transparent text-[--text] border-2 border-solid border-[#2e374a] rounded-md h-40 w-full resize-none focus:bg-white focus:text-black duration-200"
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <button
+          type="submit"
+          className="py-1 px-3 bg-transparent text-white border border-1 bg-[#151c2c] focus:bg-white focus:text-black hover:bg-white focus:text-[#2e374a] hover:text-[#2e374a] rounded-md h-full my-4 duration-300"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

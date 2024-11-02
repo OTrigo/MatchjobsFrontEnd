@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../../../../components/dashboard/posts/addPost/addPost.module.scss";
 import { useState, useEffect } from "react";
 
 const EditPostPage = ({ params }: { params: { slug: string } }) => {
@@ -52,7 +51,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -75,21 +74,21 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
       };
       const response = await fetch(url, options);
       const data = await response.json();
-      console.log("Updated post:", data);
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className="bg-[var(--bgSoft)] p-5 flex rounded-lg mt-5 gap-4 w-full">
+      <form className="flex flex-col w-full" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="name"
           name="name"
           value={formData.name}
           onChange={handleInputChange}
+          className="p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md w-full mt-4"
         />
         <input
           type="text"
@@ -97,6 +96,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
           name="userId"
           value={formData.userId}
           onChange={handleInputChange}
+          className="p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md w-full mt-4"
         />
         <input
           type="text"
@@ -104,8 +104,9 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
           name="jobsId"
           value={formData.jobsId}
           onChange={handleInputChange}
+          className="p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md w-full mt-4"
         />
-        <div className={styles.content}>
+        <div className="flex w-full">
           <textarea
             name="description"
             id="description"
@@ -113,10 +114,21 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
+            className="w-full resize-none p-8 bg-transparent text-[var(--text)] border-2 border-[#2e374a] rounded-md mt-4"
           ></textarea>
         </div>
-        <input type="file" name="video_uploader" onChange={handleFileChange} />
-        <button type="submit">Submit</button>
+        <input
+          type="file"
+          name="video_uploader"
+          onChange={handleFileChange}
+          className="w-1/2 h-full"
+        />
+        <button
+          type="submit"
+          className="w-full p-8 bg-teal-500 text-[var(--text)] border-none cursor-pointer mt-8"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

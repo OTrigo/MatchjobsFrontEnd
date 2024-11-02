@@ -5,39 +5,41 @@ import Chart from "../components/dashboard/chart";
 import Rightbar from "../components/dashboard/rightbar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
+import Welcome from "../components/login/Welcome";
 
 const Applications = () => {
   const [page, setPage] = useState(1);
-  const [applications, setApplications] = useState<any[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
   const [totalApplications, setTotalApplications] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const user = useContext(UserContext);
 
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
 
   useEffect(() => {
     getapplications();
   }, [page]);
 
   const getapplications = async () => {
+    if (!rawToken) return;
+    const auth = JSON.parse(rawToken)?.access_token;
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/job/candidates/${
+        `https://mjbackend.azurewebsites.net/company/applications/recruiter/${
           user?.companyId ?? 1
         }`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer" + auth,
+            Authorization: `Bearer ${auth}`,
           },
-        }
+        },
       );
 
       const data = await response.json();
       setApplications(data);
-      setTotalApplications(data);
+      setTotalApplications(data.length);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -62,16 +64,34 @@ const Applications = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-2.5">
-                <div>Juan Claudio</div>
-              </td>
-              <td>
-                <span className="">Pending</span>
-              </td>
-              <td>14.02.2024</td>
-              <td>Q.A</td>
-            </tr>
+            {applications.length > 0 ? (
+              <>
+                {applications?.map((application: Application) => (
+                  <>
+                    <tr>
+                      <td className="py-2.5">
+                        <div>{application.user?.name}</div>
+                      </td>
+                      <td>
+                        <span className="">
+                          {application?.status ?? "Pending"}
+                        </span>
+                      </td>
+                      <td>
+                        {application.createdAt?.toString() ?? "00-00-0000"}
+                      </td>
+                      <td>{application.job?.title ?? ""}</td>
+                    </tr>
+                  </>
+                ))}
+              </>
+            ) : (
+              <>
+                <tr>
+                  <td className="py-2.5">Sem aplicações recentes.</td>
+                </tr>
+              </>
+            )}
           </tbody>
         </table>
       </section>
