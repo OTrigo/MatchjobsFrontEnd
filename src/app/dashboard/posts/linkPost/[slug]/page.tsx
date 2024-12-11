@@ -20,7 +20,7 @@ interface RequestJobAndLinkPostProps {
 const createLinkInPost = async ({ job, auth, slug }: any) => {
   try {
     const response = await fetch(
-      `https://mjbackend.azurewebsites.net/post/addjob/${slug}`,
+      `${process.env.NEXT_PUBLIC_API_URL}post/addjob/${slug}`,
       {
         method: "POST",
         headers: {
@@ -53,7 +53,7 @@ const createLinkInPost = async ({ job, auth, slug }: any) => {
 const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
   try {
     const response = await fetch(
-      `https://mjbackend.azurewebsites.net/job/${jobId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}job/${jobId}`,
       {
         method: "GET",
         headers: {
@@ -81,8 +81,8 @@ const getJob = async ({ auth, jobId }: RequestJobAndLinkPostProps) => {
 
 const LinkPostInJob = ({ params }: { params: { slug: string } }) => {
   const [loading, setLoading] = useState(false);
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   const handleSubmit = async (e: React.FormEvent<FormElement>) => {
     e.preventDefault();

@@ -15,8 +15,8 @@ interface FormElement extends HTMLFormElement {
 
 const AddPostPage = () => {
   const user = useContext(UserContext);
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   const [videoFile, setVideoFile] = useState<File | null>(null);
 
@@ -57,7 +57,7 @@ const AddPostPage = () => {
           formData.append("userId", userId.toString());
 
           const response = await fetch(
-            "https://mjbackend.azurewebsites.net/upload/upload-video/",
+            `${process.env.NEXT_PUBLIC_API_URL}upload/upload-video/`,
             {
               method: "POST",
               body: formData,
@@ -87,7 +87,7 @@ const AddPostPage = () => {
         if (videoName.length > 0) {
           try {
             const response = await fetch(
-              "https://mjbackend.azurewebsites.net/post/",
+              `${process.env.NEXT_PUBLIC_API_URL}post/`,
               {
                 method: "POST",
                 headers: {

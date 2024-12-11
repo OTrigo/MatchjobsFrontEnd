@@ -39,9 +39,12 @@ const LoginCard = () => {
 
     try {
       setIsLoading(true);
-      console.info("Fazendo request");
+      console.info(
+        "Fazendo request em: ",
+        `${process.env.NEXT_PUBLIC_API_URL}auth/signIn/`,
+      );
       const response = await fetch(
-        "https://mjbackend.azurewebsites.net/auth/signIn/",
+        `${process.env.NEXT_PUBLIC_API_URL}auth/signIn/`,
         {
           method: "POST",
           headers: {
@@ -57,11 +60,11 @@ const LoginCard = () => {
         setIsLoading(false);
         throw new Error("Erro ao enviar requisição: " + response.statusText);
       } else if (response.status === 201) {
-        setIsLoading(false);
         const data = await response.json();
         localStorage.setItem("user", JSON.stringify(data));
         console.log(data);
         router.push("/dashboard");
+        setIsLoading(false);
       }
     } catch (err) {
       setIsLoading(false);

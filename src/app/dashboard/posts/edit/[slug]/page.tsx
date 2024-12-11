@@ -6,7 +6,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   const rawToken = JSON.parse(localStorage.getItem("user") ?? "{}");
   const auth = rawToken?.access_token;
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
     description: "",
     userId: "",
     videoUrl: "",
@@ -16,7 +16,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const url = `https://mjbackend.azurewebsites.net/post/${params.slug}`;
+        const url = `${process.env.NEXT_PUBLIC_API_URL}post/${params.slug}`;
         const options = {
           method: "GET",
           headers: {
@@ -27,7 +27,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
         const response = await fetch(url, options);
         const data = await response.json();
         setFormData({
-          name: data.name,
+          title: data.title,
           description: data.description,
           userId: data.userId,
           videoUrl: data.videoUrl,
@@ -63,7 +63,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const url = `https://mjbackend.azurewebsites.net/post/${params.slug}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}post/${params.slug}`;
       const options = {
         method: "PUT",
         headers: {
@@ -72,6 +72,8 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
         },
         body: JSON.stringify(formData),
       };
+
+      console.log("formData:", formData);
       const response = await fetch(url, options);
       const data = await response.json();
       console.log("Updated post:", data);
@@ -89,11 +91,11 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
       >
         <input
           type="text"
-          placeholder="name"
-          name="name"
+          placeholder="Title of the post"
+          name="title"
           className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4
 "
-          value={formData.name}
+          value={formData.title}
           onChange={handleInputChange}
         />
 

@@ -11,8 +11,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import MenuLink from "./menuLink/menuLink";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
+import ModalUser from "../modals/ModalUser";
 
 const menuItems = [
   {
@@ -50,6 +51,7 @@ const menuItems = [
 const SideBar = () => {
   const user = useContext(UserContext);
   const router = useRouter();
+  const [modalUser, setModalUser] = useState(false);
 
   const handleLogout = () => {
     if (window !== undefined) {
@@ -58,11 +60,16 @@ const SideBar = () => {
     }
   };
 
+  const handleEditUser = () => {
+    setModalUser(true)
+  }
+
   return (
     <div
       className="h-screen sticky top-10 z-10
 "
     >
+      {modalUser && <ModalUser modalUser={modalUser} setModalUser={setModalUser} />}
       <section
         className="flex items-center gap-5 mb-5
 "
@@ -72,8 +79,9 @@ const SideBar = () => {
           alt=""
           width="50"
           height="50"
-          className="rounded-full object-cover
+          className="rounded-full object-cover hover:opacity-50 bg-black cursor-pointer
 "
+          onClick={() => handleEditUser()}
         />
         <section className="flex flex-col">
           <span className="font-medium">{user?.name}</span>

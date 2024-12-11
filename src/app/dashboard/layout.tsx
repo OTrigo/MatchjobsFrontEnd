@@ -10,7 +10,7 @@ import { UserContext } from "../../contexts/UserContext";
 import Welcome from "../components/login/Welcome";
 
 export interface DataUserProps {
-  id: number;
+  id: string;
   email: string;
   password: string;
   name: string;
@@ -34,6 +34,7 @@ export default function RootLayout({
     try {
       const dataUserToken = JSON.parse(rawToken);
       const accessToken: DataUserProps = jwtDecode(dataUserToken.access_token);
+      console.log(accessToken);
       setDataUser(accessToken);
     } catch (error) {
       console.error("Failed to decode token:", error);
@@ -46,7 +47,7 @@ export default function RootLayout({
     const auth = JSON.parse(rawToken)?.access_token;
     try {
       const response = await fetch(
-        "https://mjbackend.azurewebsites.net/user/me",
+        `${process.env.NEXT_PUBLIC_API_URL}user/me`,
         {
           method: "GET",
           headers: {

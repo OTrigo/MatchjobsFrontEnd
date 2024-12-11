@@ -5,7 +5,6 @@ import Link from "next/link";
 import Pagination from "../../components/dashboard/pagination";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
-import { VscSparkle } from "react-icons/vsc";
 import AIButton from "src/app/components/common/AIButton";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -24,22 +23,22 @@ const Post = ({ id, title, description, createdAt, videoUrl }: PostProps) => {
 
   const handleDelete = async (id: number) => {
     setIsLoading(true);
-    const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-    const auth = rawToken?.access_token;
+    const rawToken = localStorage.getItem("user") ?? "";
+    const auth = JSON.parse(rawToken)?.access_token;
     const response = await fetch(
-      `https://mjbackend.azurewebsites.net/post/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}post/${id}`,
       {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Bearer" + auth,
         },
       },
     );
 
+    const data = await response.json();
+    console.info(data);
+
     if (response.ok) {
-      const data = await response.json();
-      console.info(data);
       setIsLoading(false);
       setHasDeleted(true);
     } else {
@@ -62,7 +61,8 @@ const Post = ({ id, title, description, createdAt, videoUrl }: PostProps) => {
           <td className="roundex-3xl hover:text-[#5d57c9] hover:bg-white cursor-pointer transition-[300ms] px-2.5 py-1">
             {videoUrl && (
               <Link
-                href={`https://mjbackend.azurewebsites.net/upload/getVideo/${videoUrl}`}
+                href={`${process.env.NEXT_PUBLIC_API_URL}upload/getVideo/${videoUrl}`}
+                target="_blank"
               >
                 Preview
               </Link>
@@ -70,7 +70,7 @@ const Post = ({ id, title, description, createdAt, videoUrl }: PostProps) => {
           </td>
 
           <td className="max-h-20">
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center items-center">
               <Link href={`posts/edit/${id}`}>
                 <FaRegEdit height={24} width={24} />
               </Link>
@@ -95,8 +95,8 @@ const PostsPage = () => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   useEffect(() => {
     getPostsPerPage();
@@ -105,8 +105,10 @@ const PostsPage = () => {
   const getPostsPerPage = async () => {
     setIsLoading(true);
     try {
-      const url = `https://mjbackend.azurewebsites.net/post${
-        user?.role !== "Admin" ? `/myposts/${user?.id}` : `/page/${page}`
+      const url = `${process.env.NEXT_PUBLIC_API_URL}post${
+        user?.role !== "Admin"
+          ? `/myPosts/${user?.id}/page/${page}`
+          : `/page/${page}`
       }`;
       const response = await fetch(url, {
         method: "GET",
@@ -160,7 +162,6 @@ const PostsPage = () => {
         <tbody>
           {isLoading && (
             <tr>
-              <td className="p-2.5">Carregando...</td>
               <td className="p-2.5">Carregando...</td>
               <td className="p-2.5">Carregando...</td>
               <td className="p-2.5">Carregando...</td>

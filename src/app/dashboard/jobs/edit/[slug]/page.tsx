@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 
 const EditJobPage = ({ params }: { params: { slug: string } }) => {
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "{}");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -14,7 +14,7 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const url = `https://mjbackend.azurewebsites.net/job/${params.slug}`;
+        const url = `${process.env.NEXT_PUBLIC_API_URL}job/${params.slug}`;
         const options = {
           method: "GET",
           headers: {
@@ -50,7 +50,7 @@ const EditJobPage = ({ params }: { params: { slug: string } }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const url = `https://mjbackend.azurewebsites.net/job/${params.slug}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}job/${params.slug}`;
       const options = {
         method: "PUT",
         headers: {

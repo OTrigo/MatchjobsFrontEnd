@@ -14,7 +14,7 @@ const Card = ({ title, type }: any) => {
 
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/${user?.role === "Admin" ? "post" : `post/myposts/${user?.id}`}`,
+        `${process.env.NEXT_PUBLIC_API_URL}${user?.role === "Admin" ? "post" : `post/myposts/${user?.id}`}`,
         {
           method: "GET",
           headers: {
@@ -27,7 +27,7 @@ const Card = ({ title, type }: any) => {
       const data = await response.json();
 
       console.log(data);
-      setDisplayValue(data.total);
+      setDisplayValue(user?.role === "Admin" ? data.length : data.total);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -39,7 +39,7 @@ const Card = ({ title, type }: any) => {
     const auth = JSON.parse(rawToken ?? "")?.access_token;
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/job/company/${user?.companyId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}job/company/${user?.companyId}`,
         {
           method: "GET",
           headers: {
@@ -49,8 +49,9 @@ const Card = ({ title, type }: any) => {
         },
       );
 
+      console.log("user?.companyId:", user?.companyId);
+
       const data = await response.json();
-      console.log(data?.length);
       setDisplayValue(data?.length);
       setIsLoading(false);
     } catch (error) {
@@ -62,7 +63,7 @@ const Card = ({ title, type }: any) => {
     const auth = JSON.parse(rawToken ?? "")?.access_token;
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/company/applications/recruiter/${
+        `${process.env.NEXT_PUBLIC_API_URL}company/applications/${
           user?.companyId ?? 1
         }`,
         {
@@ -75,7 +76,8 @@ const Card = ({ title, type }: any) => {
       );
 
       const data = await response.json();
-      setDisplayValue(data?.length);
+      console.log("Pegando aplicações:", data._count);
+      setDisplayValue(data._count);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

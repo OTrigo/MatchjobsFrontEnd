@@ -36,8 +36,7 @@ const AIButton = () => {
       messages: [
         {
           role: "system",
-          content:
-            "Você é um assistente virtual para produzir vagas de trabalho. Retorne a descrição de uma vaga de trabalho em relação aos inputs registrados, responda em outra língua somente se for solicitado ou se for escrito em uma língua diferente do português.",
+          content: `Você é um assistente virtual da empresa para produzir vagas de trabalho. Retorne a descrição de uma vaga de trabalho em relação aos inputs registrados, responda em outra língua somente se for solicitado ou se for escrito em uma língua diferente do português.`,
         },
         {
           role: "user",

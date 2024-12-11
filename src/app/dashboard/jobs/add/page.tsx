@@ -11,8 +11,8 @@ interface FormElement extends HTMLFormElement {
 }
 
 const AddJobPage = () => {
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   const handleSubmit = async (e: React.FormEvent<FormElement>) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ const AddJobPage = () => {
       };
 
       const postResponse = await fetch(
-        "https://mjbackend.azurewebsites.net/job/",
+        `${process.env.NEXT_PUBLIC_API_URL}job/`,
         {
           method: "POST",
           headers: {

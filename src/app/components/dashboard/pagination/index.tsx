@@ -23,15 +23,15 @@ const Pagination = ({ setPage, page, total }: PaginationProps) => {
 "
     >
       <button
-        className="p-1.5 cursor-pointer"
+        className={`p-1.5 cursor-pointer ${page === 1 && "cursor-not-allowed text-[#ececec]"}`}
         onClick={() => handlePrev()}
         {...(page === 1 ? { disabled: true } : {})}
       >
         Previous
       </button>
       <button
-        className="p-1.5 cursor-pointer
-  disabled:cursor-not-allowed"
+        className={`p-1.5 cursor-pointer
+  disabled:cursor-not-allowed ${page === total / 10 && "cursor-not-allowed text-[#ececec]"}`}
         onClick={() => handleNext()}
         {...(page > total / 10 ? { disabled: true } : {})}
       >

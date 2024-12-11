@@ -2,7 +2,9 @@
 
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "src/contexts/UserContext";
-import { useParams } from "next/navigation";
+import { uploadVideo } from "src/app/components/actions/video/uploadVideo";
+import { uploadPost } from "src/app/components/actions/post/createPost";
+import { createJob } from "src/app/components/actions/job/createJob";
 
 interface FormElements extends HTMLFormControlsCollection {
   title: HTMLInputElement;
@@ -16,10 +18,9 @@ interface FormElement extends HTMLFormElement {
 
 const AddPostPage = () => {
   const user = useContext(UserContext);
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
-  const urlParams = new URLSearchParams(window.location.search);
-  const hasGeneratedResponse = urlParams.get("isAI");
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
+  const [isJob, setIsJob] = useState(false);
   const generatedResponse =
     window.localStorage.getItem("lastGeneratedVacancy") ?? "";
 
@@ -38,81 +39,6 @@ const AddPostPage = () => {
     }
   };
 
-  type UploadProps = {
-    title: HTMLInputElement;
-    desc: HTMLTextAreaElement;
-  };
-
-  type PostVideoProps = {
-    desc: HTMLTextAreaElement;
-    name: string;
-    file: File;
-    postId: string;
-  };
-
-  const uploadVideo = async ({ name, file, postId }: PostVideoProps) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await fetch(
-        `https://mjbackend.azurewebsites.net/upload/uploadVideo/${postId}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${auth}`,
-          },
-        },
-      );
-
-      const test = await response.json();
-      console.log(test);
-
-      if (response.ok) {
-        console.log("Video uploaded");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-
-    return name;
-  };
-
-  const uploadPost = async ({ title, desc }: UploadProps) => {
-    const postData = {
-      title: title?.value,
-      description: desc?.value,
-      userId: user?.id,
-    };
-
-    try {
-      const response = await fetch(
-        "https://mjbackend.azurewebsites.net/post/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`,
-          },
-          body: JSON.stringify(postData),
-        },
-      );
-
-      if (!response.ok) {
-        alert("Failed to submit post");
-        console.error("Error");
-      }
-
-      const createdPost = await response?.json();
-
-      console.log(createdPost?.id);
-      return createdPost?.id;
-    } catch (error) {
-      console.error("Error");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<FormElement>) => {
     e.preventDefault();
 
@@ -123,11 +49,11 @@ const AddPostPage = () => {
       return;
     }
 
-    if (!title || !desc) {
-      console.error("No Title or Description to emit a post.");
+    if (!title || !desc || !user) {
+      console.error("No Title or Description or User to emit a post.");
     }
 
-    const postId = await uploadPost({ title, desc });
+    const postId = await uploadPost({ title, desc, user, auth });
 
     const reader = new FileReader();
     reader.readAsDataURL(videoFile);
@@ -135,8 +61,33 @@ const AddPostPage = () => {
     const file = videoFile;
 
     reader.onloadend = async () => {
-      uploadVideo({ desc, name, file, postId });
+      uploadVideo({ desc, name, file, postId, auth });
     };
+
+    if (isJob) {
+      const companyId = user?.companyId ?? "";
+      const titleName = title?.value;
+      const description = desc?.value;
+
+      console.log("Info to create a Job:", {
+        titleName,
+        companyId,
+      });
+
+      const jobId = await createJob({
+        companyId,
+        description,
+        title: titleName,
+        auth,
+      });
+
+      // console.log("Info to link job into post:", {
+      //   jobId,
+      //   companyId,
+      //   titleName,
+      // });
+      // linkPostToJob({ jobId, companyId, title: titleName, auth });
+    }
   };
 
   return (
@@ -156,6 +107,18 @@ const AddPostPage = () => {
           className="py-1 px-3 bg-transparent focus:bg-white focus:text-black duration-200 text-[--text] border-2 border-[#2e374a] rounded-md h-full my-4"
           required
         />
+        <div className="flex items-center gap-4 mb-3">
+          <span>Is a Job?</span>
+          <input
+            type="button"
+            placeholder=""
+            name="job"
+            className={`h-4 w-4 border border-[#2e374a] ${isJob && "bg-green-600 border-none"} transition-all duration-200 rounded-full cursor-pointer`}
+            onClick={() => {
+              setIsJob(!isJob);
+            }}
+          />
+        </div>
         <div className="w-full h-fit flex gap-5">
           <textarea
             name="desc"

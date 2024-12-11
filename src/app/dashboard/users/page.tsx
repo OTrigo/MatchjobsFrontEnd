@@ -23,10 +23,10 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
 
   const handleDelete = async (id: number) => {
     setIsLoading(true);
-    const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-    const auth = rawToken?.access_token;
+    const rawToken = localStorage.getItem("user") ?? "";
+    const auth = JSON.parse(rawToken)?.access_token;
     const response = await fetch(
-      `https://mjbackend.azurewebsites.net/post/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}post/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -65,13 +65,7 @@ const Post = ({ id, name, description, createdAt, videoUrl }: PostProps) => {
             className={
               "rounded-[20px] text-[#5d57c9] transition duration-300 bg-white cursor-pointer"
             }
-          >
-            <Link
-              href={`https://matchjobsuploads.blob.core.windows.net/videoupload/${videoUrl}`}
-            >
-              Preview
-            </Link>
-          </td>
+          ></td>
 
           <td className={"max-h-[5rem]"}>
             <div className={"flex gap-[10px]"}>
@@ -96,8 +90,8 @@ const PostsPage = () => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   useEffect(() => {
     getPostsPerPage();
@@ -106,7 +100,7 @@ const PostsPage = () => {
   const getPostsPerPage = async () => {
     setIsLoading(true);
     try {
-      const url = `https://mjbackend.azurewebsites.net/post${
+      const url = `${process.env.NEXT_PUBLIC_API_URL}post${
         user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`
       }`;
 
@@ -118,6 +112,9 @@ const PostsPage = () => {
         },
       });
 
+      console.log(
+        user?.role !== "Admin" ? `/myposts/${page}` : `/page/${page}`,
+      );
       const data = await response.json();
       setPosts(data?.posts);
       setTotalPosts(data?.total);

@@ -2,10 +2,11 @@
 
 import Search from "../../components/dashboard/search";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaCheckCircle, FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { VscError, VscSparkle } from "react-icons/vsc";
+import { VscError } from "react-icons/vsc";
+import { UserContext } from "src/contexts/UserContext";
 import AIButton from "src/app/components/common/AIButton";
 
 interface JobsProps {
@@ -37,10 +38,10 @@ const Job = ({
 
   const handleDelete = async (id: number) => {
     setIsLoading(true);
-    const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-    const auth = rawToken?.access_token;
+    const rawToken = localStorage.getItem("user") ?? "";
+    const auth = JSON.parse(rawToken)?.access_token;
     const response = await fetch(
-      `https://mjbackend.azurewebsites.net/job/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}job/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -75,7 +76,7 @@ const Job = ({
           <td className="p-3">{company?.name}</td>
           <td className="p-3">{company?.sector}</td>
           <td>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center items-center">
               <Link href={`/dashboard/jobs/edit/${id}`} className="h-4 w-4">
                 <FaRegEdit height={24} width={24} />
               </Link>
@@ -95,9 +96,10 @@ const JobsPage = () => {
   const [jobs, setJobs] = useState<JobsProps[]>([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const user = useContext(UserContext);
 
-  const rawToken = JSON.parse(localStorage.getItem("user") ?? "");
-  const auth = rawToken?.access_token;
+  const rawToken = localStorage.getItem("user") ?? "";
+  const auth = JSON.parse(rawToken)?.access_token;
 
   useEffect(() => {
     getJobsPerPage();
@@ -106,13 +108,16 @@ const JobsPage = () => {
   const getJobsPerPage = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`https://mjbackend.azurewebsites.net/job`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer" + auth,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}job/company/${user?.companyId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer" + auth,
+          },
         },
-      });
+      );
 
       const data = await response.json();
       setJobs(data);
@@ -128,14 +133,6 @@ const JobsPage = () => {
     <div className="bg-[--bgSoft] p-5 rounded-xl mt-5">
       <div className="flex items-center justify-between">
         <Search placeholder="Search for a Jobs..." />
-        <div className="inline-flex gap-4 w-fit">
-          <Link href="/dashboard/jobs/add">
-            <button className="p-3 bg-[#5d57c9] text-[--text] border-none rounded-md cursor-pointer">
-              Add New
-            </button>
-          </Link>
-          <AIButton />
-        </div>
       </div>
       <table className="w-full">
         <thead>

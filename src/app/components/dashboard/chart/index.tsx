@@ -52,7 +52,7 @@ const Chart = () => {
     const auth = JSON.parse(rawToken)?.access_token;
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/company/applications/weekly`,
+        `${process.env.NEXT_PUBLIC_API_URL}company/applications/weekly`,
         {
           method: "GET",
           headers: {
@@ -64,8 +64,40 @@ const Chart = () => {
 
       const data = await response.json();
 
+      console.log("weekly:", data);
+
       if (Object.keys(data)?.length !== 0) {
-        setChartData(data);
+        const formattedData = [
+          {
+            name: "Monday",
+            actualWeek: data.monday,
+          },
+          {
+            name: "Tuesday",
+            actualWeek: data.tuesday,
+          },
+          {
+            name: "Wednesday",
+            actualWeek: data.wednesday,
+          },
+          {
+            name: "Thursday",
+            actualWeek: data.tuesday,
+          },
+          {
+            name: "Friday",
+            actualWeek: data.friday,
+          },
+          {
+            name: "Saturday",
+            actualWeek: data.saturday,
+          },
+          {
+            name: "Sunday",
+            actualWeek: data.sunday,
+          },
+        ];
+        setChartData(formattedData);
       }
       console.log("Do not have data");
       setIsLoading(false);

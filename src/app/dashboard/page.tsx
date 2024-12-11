@@ -5,10 +5,8 @@ import Chart from "../components/dashboard/chart";
 import Rightbar from "../components/dashboard/rightbar";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "src/contexts/UserContext";
-import Welcome from "../components/login/Welcome";
 
 const Applications = () => {
-  const [page, setPage] = useState(1);
   const [applications, setApplications] = useState<Application[]>([]);
   const [totalApplications, setTotalApplications] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,16 +14,19 @@ const Applications = () => {
 
   const rawToken = localStorage.getItem("user") ?? "";
 
+  console.log(rawToken);
+
   useEffect(() => {
     getapplications();
-  }, [page]);
+  }, []);
 
   const getapplications = async () => {
     if (!rawToken) return;
     const auth = JSON.parse(rawToken)?.access_token;
+    console.log(auth);
     try {
       const response = await fetch(
-        `https://mjbackend.azurewebsites.net/company/applications/recruiter/${
+        `${process.env.NEXT_PUBLIC_API_URL}company/lastApplications/${
           user?.companyId ?? 1
         }`,
         {
@@ -41,6 +42,7 @@ const Applications = () => {
       setApplications(data);
       setTotalApplications(data.length);
       setIsLoading(false);
+      console.log("applications", data);
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -70,11 +72,13 @@ const Applications = () => {
                   <>
                     <tr>
                       <td className="py-2.5">
-                        <div>{application.user?.name}</div>
+                        <div>{application?.user?.email}</div>
                       </td>
                       <td>
                         <span className="">
-                          {application?.status ?? "Pending"}
+                          {application?.job?.available
+                            ? "Validate"
+                            : "Not Validate"}
                         </span>
                       </td>
                       <td>

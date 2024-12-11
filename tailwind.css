@@ -113,3 +113,12 @@ a {
 #videoFile input#file-upload-button {
   background-color: red !important;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: white;
+  opacity: 1;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}

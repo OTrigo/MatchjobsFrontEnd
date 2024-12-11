@@ -4,7 +4,7 @@ import Link from "next/link";
 const Rightbar = () => {
   return (
     <>
-      <section className="fixed z-10">
+      <section className="fixed">
         <div
           className="bg-gradient-to-t from-[#182237] to-[#253352] p-5 px-6 rounded-lg mb-5 relative
 "

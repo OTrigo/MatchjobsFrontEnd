@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const EditPostPage = ({ params }: { params: { slug: string } }) => {
   const rawToken = JSON.parse(localStorage.getItem("user") ?? "{}");
-  const auth = rawToken?.access_token;
+  const auth = JSON.parse(rawToken)?.access_token;
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -16,7 +16,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const url = `https://mjbackend.azurewebsites.net/post/${params.slug}`;
+        const url = `${process.env.NEXT_PUBLIC_API_URL}post/${params.slug}`;
         const options = {
           method: "GET",
           headers: {
@@ -63,7 +63,7 @@ const EditPostPage = ({ params }: { params: { slug: string } }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const url = `https://mjbackend.azurewebsites.net/post/${params.slug}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}post/${params.slug}`;
       const options = {
         method: "PUT",
         headers: {
